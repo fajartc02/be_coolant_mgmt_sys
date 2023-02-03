@@ -1,0 +1,17 @@
+[
+  {
+    "_id": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "colName": "Master",
+    "created": "2023-01-31T10:49:29.460Z",
+    "sortNum": 10000,
+    "folders": [
+      {
+        "_id": "a0bd73a0-c636-4cc6-bc58-ea70bef2cf7e",
+        "name": "Auth",
+        "containerId": "",
+        "created": "2023-02-03T16:38:21.083Z",
+        "sortNum": 10000
+      }
+    ]
+  }
+]

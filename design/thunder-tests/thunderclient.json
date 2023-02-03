@@ -1,0 +1,54 @@
+[
+  {
+    "_id": "c3849068-b0f5-4b51-9121-3786e3d7bcea",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "",
+    "name": "Lines",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/master/lines",
+    "method": "GET",
+    "sortNum": 10000,
+    "created": "2023-01-31T10:49:51.137Z",
+    "modified": "2023-01-31T12:05:18.668Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "ca13d75a-99c3-472f-8841-d996c8828c30",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "a0bd73a0-c636-4cc6-bc58-ea70bef2cf7e",
+    "name": "Register",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/register",
+    "method": "POST",
+    "sortNum": 10000,
+    "created": "2023-02-03T16:38:10.107Z",
+    "modified": "2023-02-03T17:31:52.743Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"name\" : \"admin1\",\n  \"noreg\": \"1629082\",\n  \"phone_no\": \"082211511212\",\n  \"password\": \"admin123\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "40b2b0e4-69b6-44dc-bfdc-2f71ee6ae27f",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "a0bd73a0-c636-4cc6-bc58-ea70bef2cf7e",
+    "name": "Login",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/login",
+    "method": "POST",
+    "sortNum": 30000,
+    "created": "2023-02-03T16:48:57.768Z",
+    "modified": "2023-02-03T17:28:21.875Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"noreg\": \"1629083\",\n  \"password\": \"admin123\"\n}",
+      "form": []
+    },
+    "tests": []
+  }
+]

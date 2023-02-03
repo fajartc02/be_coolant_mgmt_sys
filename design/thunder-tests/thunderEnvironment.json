@@ -1,0 +1,32 @@
+[
+  {
+    "_id": "16f5bc70-24e2-4414-a877-2fdbe266753a",
+    "name": "Local",
+    "default": true,
+    "sortNum": 10000,
+    "created": "2023-01-31T10:50:30.731Z",
+    "modified": "2023-01-31T10:50:30.731Z",
+    "data": [
+      {
+        "name": "protocol",
+        "value": "http://"
+      },
+      {
+        "name": "hostname",
+        "value": "localhost:3100"
+      },
+      {
+        "name": "api",
+        "value": "/api/"
+      },
+      {
+        "name": "version",
+        "value": "v1"
+      },
+      {
+        "name": "token",
+        "value": ""
+      }
+    ]
+  }
+]
