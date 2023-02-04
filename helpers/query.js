@@ -9,12 +9,17 @@ function setInsertTable() {
 }
 
 module.exports = {
-    queryGET: async(table, whereCond = '', cols = null) => {
+    queryGET: async(table, whereCond = false, cols = null) => {
         return new Promise(async(resolve, reject) => {
             let selectedCols = '*'
             if (cols) {
                 selectedCols = cols.join(',')
             }
+
+            if (!whereCond) {
+                whereCond = ''
+            }
+
             let q = `SELECT ${selectedCols} FROM ${table} ${whereCond}`
             console.log(q);
             await database.query(q)
