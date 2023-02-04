@@ -2,13 +2,13 @@
   {
     "_id": "c3849068-b0f5-4b51-9121-3786e3d7bcea",
     "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
-    "containerId": "",
+    "containerId": "a47f006b-5e06-4e30-9cf0-90b4093ba2c7",
     "name": "Lines",
     "url": "{{protocol}}{{hostname}}{{api}}{{version}}/master/lines",
     "method": "GET",
     "sortNum": 10000,
     "created": "2023-01-31T10:49:51.137Z",
-    "modified": "2023-01-31T12:05:18.668Z",
+    "modified": "2023-02-04T15:32:54.977Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -57,5 +57,40 @@
         "value": "{{token}}"
       }
     ]
+  },
+  {
+    "_id": "b6af48c1-23f8-4643-a922-0b2a0e7ff29a",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "84bc43a1-7a28-4f6f-871c-83196ac22094",
+    "name": "[PUBLIC] Group",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/public/group",
+    "method": "GET",
+    "sortNum": 40000,
+    "created": "2023-02-04T15:23:47.726Z",
+    "modified": "2023-02-04T16:19:52.208Z",
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "Bearer {{token}}"
+      }
+    ],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "bc66d85e-b78f-4d53-a729-c90c629fcee2",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "a04426f8-2770-4cd8-ad86-be0f2ff7ce80",
+    "name": "Group",
+    "url": "",
+    "method": "GET",
+    "sortNum": 10000,
+    "created": "2023-02-04T15:26:08.559Z",
+    "modified": "2023-02-04T15:26:10.187Z",
+    "headers": []
   }
 ]

@@ -11,6 +11,55 @@
         "containerId": "",
         "created": "2023-02-03T16:38:21.083Z",
         "sortNum": 10000
+      },
+      {
+        "_id": "84bc43a1-7a28-4f6f-871c-83196ac22094",
+        "name": "Public",
+        "containerId": "",
+        "created": "2023-02-04T15:22:27.117Z",
+        "sortNum": 20000
+      },
+      {
+        "_id": "4b3a5465-da72-49ef-97f5-2bee60f8a20d",
+        "name": "Master",
+        "containerId": "",
+        "created": "2023-02-04T15:22:39.374Z",
+        "sortNum": 30000
+      },
+      {
+        "_id": "631b2ce9-30e3-4159-9a30-749dec28b92f",
+        "name": "Operational",
+        "containerId": "",
+        "created": "2023-02-04T15:22:49.123Z",
+        "sortNum": 40000
+      },
+      {
+        "_id": "a04426f8-2770-4cd8-ad86-be0f2ff7ce80",
+        "name": "Groups",
+        "containerId": "4b3a5465-da72-49ef-97f5-2bee60f8a20d",
+        "created": "2023-02-04T15:25:13.196Z",
+        "sortNum": 50000
+      },
+      {
+        "_id": "a47f006b-5e06-4e30-9cf0-90b4093ba2c7",
+        "name": "Lines",
+        "containerId": "4b3a5465-da72-49ef-97f5-2bee60f8a20d",
+        "created": "2023-02-04T15:25:19.788Z",
+        "sortNum": 60000
+      },
+      {
+        "_id": "463ffa5b-6540-4e8f-8ce7-52e0e74de331",
+        "name": "Machines",
+        "containerId": "4b3a5465-da72-49ef-97f5-2bee60f8a20d",
+        "created": "2023-02-04T15:25:31.998Z",
+        "sortNum": 70000
+      },
+      {
+        "_id": "8c4f76ff-9465-4db8-a64c-5b1e4ba4b0f3",
+        "name": "Users",
+        "containerId": "4b3a5465-da72-49ef-97f5-2bee60f8a20d",
+        "created": "2023-02-04T15:25:49.207Z",
+        "sortNum": 80000
       }
     ]
   }
