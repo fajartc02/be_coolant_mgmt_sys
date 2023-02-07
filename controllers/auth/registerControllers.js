@@ -7,7 +7,6 @@ module.exports = {
     register: async(req, res) => {
         try {
             let unreadPassword = await security.encryptPassword(req.body.password)
-            console.log(unreadPassword);
             req.body.password = unreadPassword
             await queryPOST(table, req.body)
                 .then((result) => {
