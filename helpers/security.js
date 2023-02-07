@@ -1,5 +1,4 @@
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 
 module.exports = {
     encryptPassword: async(password) => {
@@ -14,9 +13,5 @@ module.exports = {
             if (is_correct) { resolve(true) }
             reject(false)
         })
-    },
-    generateToken: async(payload) => {
-        var token = await jwt.sign(payload, process.env.SECRET_KEY);
-        return token
     },
 }
