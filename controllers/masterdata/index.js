@@ -1,7 +1,11 @@
-const { getData } = require('./linesControllers')
+const {
+    getData,
+    postData
+} = require('./linesControllers')
 
 module.exports = {
     lines: {
-        getData
+        getData,
+        postData
     }
 }

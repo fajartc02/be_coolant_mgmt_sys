@@ -8,9 +8,19 @@
     "method": "GET",
     "sortNum": 10000,
     "created": "2023-01-31T10:49:51.137Z",
-    "modified": "2023-02-04T15:32:54.977Z",
-    "headers": [],
+    "modified": "2023-02-05T10:34:06.075Z",
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "Bearer {{token}}",
+        "isDisabled": true
+      }
+    ],
     "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
     "tests": []
   },
   {
@@ -92,5 +102,121 @@
     "created": "2023-02-04T15:26:08.559Z",
     "modified": "2023-02-04T15:26:10.187Z",
     "headers": []
+  },
+  {
+    "_id": "a51860d1-1ea6-48bb-9df3-f7a7b74760e8",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "a47f006b-5e06-4e30-9cf0-90b4093ba2c7",
+    "name": "Lines",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/master/lines",
+    "method": "POST",
+    "sortNum": 20000,
+    "created": "2023-02-05T10:59:23.359Z",
+    "modified": "2023-02-07T11:45:38.782Z",
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "Bearer {{token}}",
+        "isDisabled": true
+      }
+    ],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"line_nm\" : \"test line\",\n  \"line_desc\": \"\",\n  \"line_lvl\": \"LINE\",\n  \"idx_pos\" : 0\n}",
+      "form": []
+    },
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "d7705930-336d-45fc-99bf-4cd7e8c003ae",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "a47f006b-5e06-4e30-9cf0-90b4093ba2c7",
+    "name": "Lines, Area Without Cell",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/master/lines",
+    "method": "POST",
+    "sortNum": 30000,
+    "created": "2023-02-07T11:14:57.772Z",
+    "modified": "2023-02-07T12:12:34.686Z",
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "Bearer {{token}}",
+        "isDisabled": true
+      }
+    ],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"line_nm\" : \"test line\",\n  \"line_desc\": \"\",\n  \"line_lvl\": \"LINE\",\n  \"idx_pos\" : 0,\n  \"childs\" : [\n    {\n      \"line_nm\" : \"test area\",\n      \"line_desc\": \"\",\n      \"line_lvl\": \"AREA\",\n      \"idx_pos\" : 0\n    },\n    {\n      \"line_nm\" : \"test area 2\",\n      \"line_desc\": \"\",\n      \"line_lvl\": \"AREA\",\n      \"idx_pos\" : 1\n    } \n  ]\n}",
+      "form": []
+    },
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "225db829-a3bc-4f1b-a0a3-1537aaa7489f",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "a47f006b-5e06-4e30-9cf0-90b4093ba2c7",
+    "name": "Lines With Area,Cell",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/master/lines",
+    "method": "POST",
+    "sortNum": 40000,
+    "created": "2023-02-07T11:16:54.477Z",
+    "modified": "2023-02-07T12:38:00.226Z",
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "Bearer {{token}}",
+        "isDisabled": true
+      }
+    ],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"line_nm\" : \"test line with area cell\",\n  \"line_desc\": \"\",\n  \"line_lvl\": \"LINE\",\n  \"idx_pos\" : 0,\n  \"childs\" : [\n    {\n      \"line_nm\" : \"test area\",\n      \"line_desc\": \"\",\n      \"line_lvl\": \"AREA\",\n      \"idx_pos\" : 0,\n      \"childs\" : [\n        {\n          \"line_nm\" : \"test cell\",\n          \"line_desc\": \"\",\n          \"line_lvl\": \"CELL\",\n          \"idx_pos\" : 0\n        },\n        {\n          \"line_nm\" : \"test cell 2\",\n          \"line_desc\": \"\",\n          \"line_lvl\": \"CELL\",\n          \"idx_pos\" : 0\n        }  \n      ]\n    },\n    {\n      \"line_nm\" : \"test area 2\",\n      \"line_desc\": \"\",\n      \"line_lvl\": \"AREA\",\n      \"idx_pos\" : 0,\n      \"childs\" : [\n        {\n          \"line_nm\" : \"test cell 1\",\n          \"line_desc\": \"\",\n          \"line_lvl\": \"CELL\",\n          \"idx_pos\" : 0\n        }  \n      ]\n    }  \n  ]\n}",
+      "form": []
+    },
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "94ab89c8-e956-4369-aef3-e26e2c601b87",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "a47f006b-5e06-4e30-9cf0-90b4093ba2c7",
+    "name": "Lines, Cell Without Area",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/master/lines",
+    "method": "POST",
+    "sortNum": 35000,
+    "created": "2023-02-07T11:29:53.026Z",
+    "modified": "2023-02-07T12:26:38.076Z",
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "Bearer {{token}}",
+        "isDisabled": true
+      }
+    ],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"line_nm\" : \"test line\",\n  \"line_desc\": \"\",\n  \"line_lvl\": \"LINE\",\n  \"idx_pos\" : 0,\n  \"childs\" : [\n    {\n      \"line_nm\" : \"test cell\",\n      \"line_desc\": \"\",\n      \"line_lvl\": \"CELL\",\n      \"idx_pos\" : 0\n    },\n    {\n      \"line_nm\" : \"test cell 2\",\n      \"line_desc\": \"\",\n      \"line_lvl\": \"CELL\",\n      \"idx_pos\" : 1\n    } \n  ]\n}",
+      "form": []
+    },
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
   }
 ]
