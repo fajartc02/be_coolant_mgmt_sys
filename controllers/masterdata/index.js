@@ -7,5 +7,8 @@ module.exports = {
     lines: {
         getData,
         postData
+    },
+    machines: {
+        getData
     }
 }

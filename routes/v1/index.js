@@ -5,13 +5,13 @@ var router = express.Router();
 const public = require('./public')
 
 const { register, login } = require('./auth/index')
-const { lines } = require('./masterdata/index')
+const masterdata = require('./masterdata/index')
 
 router.use('/public', public)
 
 router.use('/login', login)
 router.use('/register', register)
 
-router.use('/master', lines)
+router.use('/master', masterdata)
 
 module.exports = router;

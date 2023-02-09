@@ -218,5 +218,47 @@
       "bearer": "{{token}}"
     },
     "tests": []
+  },
+  {
+    "_id": "b06d3d86-2a67-45b8-b359-45d2d69ead0f",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "463ffa5b-6540-4e8f-8ce7-52e0e74de331",
+    "name": "Machines",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/master/machines",
+    "method": "GET",
+    "sortNum": 50000,
+    "created": "2023-02-09T11:37:07.718Z",
+    "modified": "2023-02-09T13:11:34.965Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "3137cee2-5c29-4709-ac07-52f5237dd351",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "a47f006b-5e06-4e30-9cf0-90b4093ba2c7",
+    "name": "Lines params Id",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/master/lines/10",
+    "method": "GET",
+    "sortNum": 15000,
+    "created": "2023-02-09T11:49:05.318Z",
+    "modified": "2023-02-09T11:51:28.902Z",
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "Bearer {{token}}",
+        "isDisabled": true
+      }
+    ],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
   }
 ]

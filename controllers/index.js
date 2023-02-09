@@ -1,4 +1,4 @@
-const { lines } = require('./masterdata')
+const { lines, machines } = require('./masterdata')
 const { register, login } = require('./auth/index')
 const { getPublicGroup } = require('./public/groupController')
 
@@ -10,5 +10,6 @@ module.exports = {
     // PUBLIC
     getPublicGroup,
 
-    lines
+    lines,
+    machines
 }

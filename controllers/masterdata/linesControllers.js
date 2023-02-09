@@ -2,16 +2,21 @@ const table = 'tb_m_lines'
 const { queryGET, queryPOST, queryBulkPOST } = require('../../helpers/query')
 const response = require('../../helpers/response')
 module.exports = {
-    getData: async(req, res) => {
+    getData: async (req, res) => {
         try {
-            await queryGET(table, `WHERE line_lvl = 'LINE'`).then((result) => {
+            console.log(req.params);
+            let whereCond = ''
+            if (req.params._id) {
+                whereCond = ` AND line_id = ${req.params._id}`
+            }
+            await queryGET(table, `WHERE line_lvl = 'LINE'${whereCond}`).then((result) => {
                 response.success(res, 'Success to get all lines', result)
             })
         } catch (error) {
             response.failed(res, error)
         }
     },
-    postData: async(req, res) => {
+    postData: async (req, res) => {
         try {
             let objLine = null
             let containerArea = []
@@ -19,22 +24,17 @@ module.exports = {
             let isAreaWithoutCell = req.body.childs ? req.body.childs[0].line_lvl == "AREA" && !req.body.childs[0].childs : false
             let isAreaWithCell = req.body.childs ? req.body.childs[0].line_lvl == "AREA" && req.body.childs[0].childs ? true : false : false
             let isCellWithoutArea = req.body.childs ? req.body.childs[0].line_lvl == "CELL" && !req.body.childs[0].childs : false
-            console.log(req.body);
+
             objLine = {
                 ...req.body
             }
             delete objLine.childs
-            console.log('isCellWithoutArea');
-            console.log(isCellWithoutArea);
-            console.log('isAreaWithoutCell');
-            console.log(isAreaWithoutCell);
+
             if (isAreaWithoutCell || isCellWithoutArea) {
                 containerArea = req.body.childs
                 console.log(containerArea);
             }
-            console.log('isAreaWithCell');
-            // console.log(req.body.childs[0].line_lvl == "AREA" && req.body.childs[0].childs);
-            console.log(isAreaWithCell);
+
             if (isAreaWithCell) {
                 containerArea = await req.body.childs.map(area => {
                     let areaObj = {
@@ -46,8 +46,6 @@ module.exports = {
                     return areaObj
                 })
             }
-            console.log('containerArea');
-            console.log(containerArea);
 
             await queryPOST(table, objLine)
                 .then(async result => {
@@ -59,8 +57,6 @@ module.exports = {
                             itm.parent_id = insertedLineId
                             return itm
                         })
-                        console.log('mapAreawithParentId');
-                        console.log(mapAreawithParentId);
                         await queryBulkPOST(table, mapAreawithParentId)
                             .then(async resultChilds => {
                                 if (!req.body.childs[0].childs) return response.success(res, 'Success To create Line With Cell/Area', resultChilds)
