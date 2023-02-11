@@ -46,25 +46,26 @@ module.exports = {
                     return areaObj
                 })
             }
-
+            // CREATE LINE ON DATABASE
             await queryPOST(table, objLine)
                 .then(async result => {
+                    // SEND RESPONSE IF ONLY LINE POST
                     if (!req.body.childs) return response.success(res, 'Success To create Line Only', result)
                     let insertedLineId = result.rows[0].line_id
-                    console.log(result.rows[0].line_id);
+
                     if (isAreaWithoutCell || isCellWithoutArea || isAreaWithCell) {
                         let mapAreawithParentId = containerArea.map(itm => {
                             itm.parent_id = insertedLineId
                             return itm
                         })
+                        // CREATE BULK AREA/CELL ON DATABASE
                         await queryBulkPOST(table, mapAreawithParentId)
                             .then(async resultChilds => {
+                                // SEND RESPONSE IF CELL/AREA ONLY POST
                                 if (!req.body.childs[0].childs) return response.success(res, 'Success To create Line With Cell/Area', resultChilds)
                                 let mapAreaParentId = await resultChilds.rows.map(child => {
                                     return child.line_id
                                 })
-                                console.log('mapAreaParentId');
-                                console.log(mapAreaParentId);
                                 if (isAreaWithCell) {
                                     let mapAreaChilds = await req.body.childs.map((areaItm, i) => {
                                         return areaItm.childs.map(cellItm => {
@@ -72,7 +73,6 @@ module.exports = {
                                             return cellItm
                                         })
                                     })
-                                    console.log(mapAreaChilds);
 
                                     for (let i = 0; i < mapAreaChilds.length; i++) {
                                         const rawCell = mapAreaChilds[i];
@@ -80,9 +80,10 @@ module.exports = {
                                             containerCell.push(rawCell[j])
                                         }
                                     }
-                                    console.log(containerCell);
+                                    // CREATE BULK CELL IN AREA ON DATABASE
                                     await queryBulkPOST(table, containerCell)
                                         .then(resCell => {
+                                            // SEND RESPONSE IF CELL IN AREA POST
                                             return response.success(res, 'Success To create Line With Area And Cell', resCell)
                                         })
                                 }

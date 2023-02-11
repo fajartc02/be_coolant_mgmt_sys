@@ -2,7 +2,6 @@ const { lines, machines } = require('./masterdata')
 const { register, login } = require('./auth/index')
 const { getPublicGroup } = require('./public/groupController')
 
-
 module.exports = {
     // AUTH
     register,
@@ -10,6 +9,11 @@ module.exports = {
     // PUBLIC
     getPublicGroup,
 
-    lines,
-    machines
+    lines: {
+        getData: lines.getData,
+        postData: lines.postData
+    },
+    machines: {
+        getData: machines.getData,
+    }
 }

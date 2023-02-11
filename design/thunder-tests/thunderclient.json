@@ -170,7 +170,7 @@
     "method": "POST",
     "sortNum": 40000,
     "created": "2023-02-07T11:16:54.477Z",
-    "modified": "2023-02-07T12:38:00.226Z",
+    "modified": "2023-02-10T06:29:46.952Z",
     "headers": [
       {
         "name": "Authorization",
@@ -181,7 +181,7 @@
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"line_nm\" : \"test line with area cell\",\n  \"line_desc\": \"\",\n  \"line_lvl\": \"LINE\",\n  \"idx_pos\" : 0,\n  \"childs\" : [\n    {\n      \"line_nm\" : \"test area\",\n      \"line_desc\": \"\",\n      \"line_lvl\": \"AREA\",\n      \"idx_pos\" : 0,\n      \"childs\" : [\n        {\n          \"line_nm\" : \"test cell\",\n          \"line_desc\": \"\",\n          \"line_lvl\": \"CELL\",\n          \"idx_pos\" : 0\n        },\n        {\n          \"line_nm\" : \"test cell 2\",\n          \"line_desc\": \"\",\n          \"line_lvl\": \"CELL\",\n          \"idx_pos\" : 0\n        }  \n      ]\n    },\n    {\n      \"line_nm\" : \"test area 2\",\n      \"line_desc\": \"\",\n      \"line_lvl\": \"AREA\",\n      \"idx_pos\" : 0,\n      \"childs\" : [\n        {\n          \"line_nm\" : \"test cell 1\",\n          \"line_desc\": \"\",\n          \"line_lvl\": \"CELL\",\n          \"idx_pos\" : 0\n        }  \n      ]\n    }  \n  ]\n}",
+      "raw": "{\n  \"line_nm\" : \"test line with area cell\",\n  \"line_desc\": \"\",\n  \"line_lvl\": \"LINE\",\n  \"idx_pos\" : 0,\n  \"childs\" : [\n    {\n      \"line_nm\" : \"Area Rough\",\n      \"line_desc\": \"\",\n      \"line_lvl\": \"AREA\",\n      \"idx_pos\" : 1,\n      \"childs\" : [\n        {\n          \"line_nm\" : \"Cell Rough A\",\n          \"line_desc\": \"\",\n          \"line_lvl\": \"CELL\",\n          \"idx_pos\" : 1\n        },\n        {\n          \"line_nm\" : \"Cell Rough B\",\n          \"line_desc\": \"\",\n          \"line_lvl\": \"CELL\",\n          \"idx_pos\" : 2\n        }  \n      ]\n    },\n    {\n      \"line_nm\" : \"Area Finish\",\n      \"line_desc\": \"\",\n      \"line_lvl\": \"AREA\",\n      \"idx_pos\" : 2,\n      \"childs\" : [\n        {\n          \"line_nm\" : \"Cell Finish A\",\n          \"line_desc\": \"\",\n          \"line_lvl\": \"CELL\",\n          \"idx_pos\" : 1\n        },\n        {\n          \"line_nm\" : \"Cell Finish B\",\n          \"line_desc\": \"\",\n          \"line_lvl\": \"CELL\",\n          \"idx_pos\" : 2\n        }  \n      ]\n    }  \n  ]\n}",
       "form": []
     },
     "auth": {
@@ -259,6 +259,20 @@
       "type": "bearer",
       "bearer": "{{token}}"
     },
+    "tests": []
+  },
+  {
+    "_id": "5e574d14-443d-47b8-87cd-93347952ed26",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "f675be66-ed84-45b9-866c-7bedebfc6cb8",
+    "name": "Line Machines Map",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/dashboard",
+    "method": "GET",
+    "sortNum": 60000,
+    "created": "2023-02-10T08:22:34.526Z",
+    "modified": "2023-02-10T08:23:14.898Z",
+    "headers": [],
+    "params": [],
     "tests": []
   }
 ]
