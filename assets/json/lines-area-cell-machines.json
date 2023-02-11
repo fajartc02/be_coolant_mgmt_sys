@@ -1,0 +1,105 @@
+{
+    "line_nm": "Cylinder Head",
+    "line_desc": "",
+    "line_lvl": "LINE",
+    "idx_pos": 0,
+    "childs": [{
+            "line_nm": "Area Rough",
+            "line_desc": "",
+            "line_lvl": "AREA",
+            "idx_pos": 1,
+            "childs": [{
+                    "line_nm": "Cell Rough A",
+                    "line_desc": "",
+                    "line_lvl": "CELL",
+                    "idx_pos": 1,
+                    "machines": [{
+                            "machine_id": 0,
+                            "machine_nm": "IMSP-0001",
+                            "idx_pos": 1,
+                            "status_color": "#00ff94",
+                            "status_check": "Normal"
+                        },
+                        {
+                            "machine_id": 0,
+                            "machine_nm": "IMSP-0001",
+                            "idx_pos": 1,
+                            "status_color": "#00ff94",
+                            "status_check": "Normal"
+                        }
+                    ]
+                },
+                {
+                    "line_nm": "Cell Rough B",
+                    "line_desc": "",
+                    "line_lvl": "CELL",
+                    "idx_pos": 2,
+                    "machines": [{
+                            "machine_id": 0,
+                            "machine_nm": "IMSP-0001",
+                            "idx_pos": 1,
+                            "status_color": "#00ff94",
+                            "status_check": "Normal"
+                        },
+                        {
+                            "machine_id": 0,
+                            "machine_nm": "IMSP-0001",
+                            "idx_pos": 1,
+                            "status_color": "#00ff94",
+                            "status_check": "Normal"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "line_nm": "Area Finish",
+            "line_desc": "",
+            "line_lvl": "AREA",
+            "idx_pos": 2,
+            "childs": [{
+                    "line_nm": "Cell Finish A",
+                    "line_desc": "",
+                    "line_lvl": "CELL",
+                    "idx_pos": 1,
+                    "machines": [{
+                            "machine_id": 0,
+                            "machine_nm": "IMSP-0001",
+                            "idx_pos": 1,
+                            "status_color": "#00ff94",
+                            "status_check": "Normal"
+                        },
+                        {
+                            "machine_id": 0,
+                            "machine_nm": "IMSP-0001",
+                            "idx_pos": 1,
+                            "status_color": "#00ff94",
+                            "status_check": "Normal"
+                        }
+                    ]
+                },
+                {
+                    "line_nm": "Cell Finish B",
+                    "line_desc": "",
+                    "line_lvl": "CELL",
+                    "idx_pos": 2,
+                    "machines": [{
+                            "machine_id": 0,
+                            "machine_nm": "IMSP-0001",
+                            "idx_pos": 1,
+                            "status_color": "#00ff94",
+                            "status_check": "Normal"
+                        },
+                        {
+                            "machine_id": 0,
+                            "machine_nm": "IMSP-0001",
+                            "idx_pos": 1,
+                            "status_color": "#00ff94",
+                            "status_check": "Normal"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
