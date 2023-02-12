@@ -265,14 +265,36 @@
     "_id": "5e574d14-443d-47b8-87cd-93347952ed26",
     "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
     "containerId": "f675be66-ed84-45b9-866c-7bedebfc6cb8",
-    "name": "Line Machines Map",
-    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/dashboard",
+    "name": "Lines Map",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/dashboard/linesMap/1",
     "method": "GET",
     "sortNum": 60000,
     "created": "2023-02-10T08:22:34.526Z",
-    "modified": "2023-02-10T08:23:14.898Z",
+    "modified": "2023-02-11T15:15:55.318Z",
     "headers": [],
     "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "e9e69900-dc4b-48b5-b2df-99985a6a29c3",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "f675be66-ed84-45b9-866c-7bedebfc6cb8",
+    "name": "Machines Status Map",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/dashboard/machinesStatusMap/7",
+    "method": "GET",
+    "sortNum": 70000,
+    "created": "2023-02-11T15:16:38.217Z",
+    "modified": "2023-02-12T09:01:34.391Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
     "tests": []
   }
 ]
