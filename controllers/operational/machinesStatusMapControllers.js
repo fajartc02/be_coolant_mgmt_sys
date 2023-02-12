@@ -9,7 +9,8 @@ module.exports = {
 	tmmc.machine_nm, 
 	tmmc.machine_desc, 
 	tmmc.machine_maker, 
-	tmmc.idx_pos
+	tmmc.idx_pos,
+    ('#00ff90') AS color
 FROM 
 	${table} tmmc 
 WHERE 
