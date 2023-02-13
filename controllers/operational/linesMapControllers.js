@@ -11,7 +11,8 @@ module.exports = {
 		line_nm,
 		line_desc,
 		line_lvl,
-		idx_pos
+		idx_pos,
+		loop_by
 	FROM
 		${table}
 	WHERE
@@ -23,7 +24,8 @@ module.exports = {
 			e.line_nm,
 			e.line_desc,
 			e.line_lvl,
-			e.idx_pos
+			e.idx_pos,
+			e.loop_by
 		FROM
 			${table} e
 		INNER JOIN sublines s ON s.line_id = e.parent_id
@@ -33,7 +35,8 @@ module.exports = {
 	sublines.line_nm,
 	sublines.line_desc,
 	sublines.line_lvl,
-	sublines.idx_pos
+	sublines.idx_pos,
+	sublines.loop_by
 FROM
 	sublines
 order by parent_id, idx_pos ASC`
@@ -46,6 +49,7 @@ order by parent_id, idx_pos ASC`
 						child.line_nm = currentChild.line_nm;
 						child.line_desc = currentChild.line_desc;
 						child.line_lvl = currentChild.line_lvl;
+						child.loop_by = currentChild.loop_by;
 						child.children = [];
 
 						//Looking for childrens in all input data
