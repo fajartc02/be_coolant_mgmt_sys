@@ -10,7 +10,10 @@ module.exports = {
 	tmmc.machine_desc, 
 	tmmc.machine_maker, 
 	tmmc.idx_pos,
-    ('#00ff90') AS color
+    ('#00ff90') AS color_status,
+    ('Normal') AS checked_status,
+    false AS is_changes_checmical_status,
+    ('Belum Waktunya Pengurasan') AS changes_checmical_status
 FROM 
 	${table} tmmc 
 WHERE 
