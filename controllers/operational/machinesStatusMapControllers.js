@@ -10,6 +10,7 @@ module.exports = {
 	tmmc.machine_desc, 
 	tmmc.machine_maker, 
 	tmmc.idx_pos,
+    true AS is_checked_status,
     ('#00ff90') AS color_status,
     ('Normal') AS checked_status,
     false AS is_changes_checmical_status,
