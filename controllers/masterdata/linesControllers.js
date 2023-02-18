@@ -9,10 +9,11 @@ module.exports = {
             if (req.params._id) {
                 whereCond = ` AND line_id = ${req.params._id}`
             }
-            await queryGET(table, `WHERE line_lvl = 'LINE'${whereCond}`).then((result) => {
+            await queryGET(table, `WHERE line_lvl = 1${whereCond}`).then((result) => {
                 response.success(res, 'Success to get all lines', result)
             })
         } catch (error) {
+            console.log(error);
             response.failed(res, error)
         }
     },
