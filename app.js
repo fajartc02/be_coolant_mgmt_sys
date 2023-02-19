@@ -25,7 +25,7 @@ console.log({
 var cron = require('node-cron');
 const cronGenerateSchedules = require('./functions/cronGenerateSchedules')
 
-cronGenerateSchedules()
+// cronGenerateSchedules()
 cron.schedule('0 0 */1 * *', (s) => { // At 00:00 on every day-of-month.
     // 0 */2 * * * (At minute 0 past every 2nd hour.)
     // FOR TEST */10 * * * * * (every 10 sec)
