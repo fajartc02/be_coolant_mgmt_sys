@@ -1,5 +1,5 @@
 const { lines, machines } = require('./masterdata')
-const { linesMap, machinesStatusMap } = require('./operational')
+const { linesMap, machinesStatusMap, linesSummaries } = require('./operational')
 const { register, login } = require('./auth/index')
 const { getPublicGroup } = require('./public/groupController')
 
@@ -22,5 +22,8 @@ module.exports = {
     },
     machinesStatusMap: {
         getData: machinesStatusMap.getData
+    },
+    linesSummaries: {
+        getData: linesSummaries.getData
     }
 }

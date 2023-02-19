@@ -40,6 +40,7 @@ module.exports = {
 FROM
 	sublines
 order by parent_id, idx_pos ASC`
+			console.log(q);
 			await queryCustom(q).then(async (result) => {
 				if (result.rows.length > 0) {
 					function BuildChild(data, currentChild) {

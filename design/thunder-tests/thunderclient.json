@@ -284,11 +284,29 @@
     "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
     "containerId": "f675be66-ed84-45b9-866c-7bedebfc6cb8",
     "name": "Machines Status Map",
-    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/dashboard/machinesStatusMap/7",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/dashboard/machinesStatusMap/4",
     "method": "GET",
     "sortNum": 70000,
     "created": "2023-02-11T15:16:38.217Z",
-    "modified": "2023-02-12T09:01:34.391Z",
+    "modified": "2023-02-19T13:58:25.798Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "f36446a9-f655-430b-b79d-f15ed109ff86",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "f675be66-ed84-45b9-866c-7bedebfc6cb8",
+    "name": "Lines Summaries",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/dashboard/linesSummaries",
+    "method": "GET",
+    "sortNum": 80000,
+    "created": "2023-02-19T14:41:08.402Z",
+    "modified": "2023-02-19T15:54:31.786Z",
     "headers": [],
     "params": [],
     "auth": {
