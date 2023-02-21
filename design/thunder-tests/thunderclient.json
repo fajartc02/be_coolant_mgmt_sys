@@ -314,5 +314,23 @@
       "bearer": "{{token}}"
     },
     "tests": []
+  },
+  {
+    "_id": "f5805d83-5cb6-4cdd-a97d-5228659f2804",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "78e9171c-6336-4d16-811d-ee58f5dd7d9c",
+    "name": "Checklist Machine",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/checksheet/check/machine/1",
+    "method": "GET",
+    "sortNum": 90000,
+    "created": "2023-02-20T13:52:40.040Z",
+    "modified": "2023-02-21T17:24:33.097Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
   }
 ]

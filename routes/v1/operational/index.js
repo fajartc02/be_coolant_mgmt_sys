@@ -3,10 +3,15 @@ const linesMap = require('./linesMap')
 const machinesStatusMap = require('./machinesStatusMap')
 const linesSummaries = require('./linesSummaries')
 
+const auth = require('../../../helpers/auth')
 
-router.use('/dashboard/linesMap', linesMap)
-router.use('/dashboard/machinesStatusMap', machinesStatusMap)
-router.use('/dashboard/linesSummaries', linesSummaries)
+const checksheet = require('./checksheet/index')
 
+
+router.use('/dashboard/linesMap', auth.verifyToken, linesMap)
+router.use('/dashboard/machinesStatusMap', auth.verifyToken, machinesStatusMap)
+router.use('/dashboard/linesSummaries', auth.verifyToken, linesSummaries)
+
+router.use('/checksheet', checksheet)
 
 module.exports = router
