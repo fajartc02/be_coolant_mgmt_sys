@@ -11,6 +11,7 @@ async function cronGenerateSchedules() {
     try {
         let q = `SELECT
 	tmmtp.maintenance_id,
+    trmts.periodic_val,
 	tmmtp.maintenance_nm, 
 	tmper.periodic_nm,
 	tmper.periodic_precision,
@@ -25,35 +26,35 @@ JOIN ${tb_m_periodic} tmper
 JOIN ${tb_m_maintenance} tmmtp
 	ON tmmtp.maintenance_id = trmts.maintenance_id`
         await queryCustom(q)
-            .then(async (result) => {
+            .then(async(result) => {
                 let resData = result.rows
                 if (resData.length > 0) {
                     console.log(resData);
                     let mapDataCheck = await resData.map(async itm => {
                         return await {
                             ...itm,
-                            is_tr_avail: await checkTransactionGenerate(itm.machine_id, itm.maintenance_id, itm.periodic_precision)
+                            is_tr_avail: await checkTransactionGenerate(itm.machine_id, itm.maintenance_id, itm.periodic_precision * itm.periodic_val)
                         }
                     })
                     let resWaitPromise = await Promise.all(mapDataCheck)
                     let set7Clock = new Date().setHours(7, 0, 0) + (7 * 60 * 60 * 1000)
                     let created_dt = new Date(set7Clock).toISOString()
                     resWaitPromise.forEach((item, i) => {
-                        // 
-                        if (item.is_tr_avail) {
-                            // PERIODIC CHECK ALREADY GENERATE 
-                            // DO NOTHING
-                        } else {
-                            // CREATE PERIODIC CHECK
-                            console.log(item);
-                            insertPeriodicForCheck(item.machine_id, item.maintenance_id, created_dt)
-                        }
-                        if (i + 1 == resWaitPromise.length) {
-                            // CREATE LOG CRON ONLY 1 ALREADY GENERATE
-                            queryPOST(tb_r_cron_log, { msg: `Success to RUN CRON 1 CYCLE`, status_msg: 'SUCCESS' })
-                        }
-                    })
-                    // console.log(resWaitPromise);
+                            // 
+                            if (item.is_tr_avail) {
+                                // PERIODIC CHECK ALREADY GENERATE 
+                                // DO NOTHING
+                            } else {
+                                // CREATE PERIODIC CHECK
+                                console.log(item);
+                                insertPeriodicForCheck(item.machine_id, item.maintenance_id, created_dt)
+                            }
+                            if (i + 1 == resWaitPromise.length) {
+                                // CREATE LOG CRON ONLY 1 ALREADY GENERATE
+                                queryPOST(tb_r_cron_log, { msg: `Success to RUN CRON 1 CYCLE`, status_msg: 'SUCCESS' })
+                            }
+                        })
+                        // console.log(resWaitPromise);
                 } else {
                     console.log('DATA NOT FOUND');
                     queryPOST(tb_r_cron_log, { msg: `MT Schedules NOT FOUND`, status_msg: 'SUCCESS' })
@@ -67,14 +68,14 @@ JOIN ${tb_m_maintenance} tmmtp
 }
 
 
-async function checkTransactionGenerate(machine_id, maintenance_id, periodic_precision) {
+async function checkTransactionGenerate(machine_id, maintenance_id, periodic_calculate) {
     // if EXTRACT(EPOCH FROM (created_dt - NOW())) AS days_diff
 
     return await queryGET(tb_r_periodic_check, ` WHERE machine_id = ${machine_id} AND maintenance_id = ${maintenance_id} AND start_date IS NULL ORDER BY created_dt DESC LIMIT 1`, ['machine_id', 'maintenance_id', `DATE_PART('day', NOW() - created_dt) AS days_diff`])
         .then((result) => {
             let is_avail = result.length > 0
             if (is_avail) {
-                let is_avail_time_diff = +result[0].days_diff < periodic_precision
+                let is_avail_time_diff = +result[0].days_diff < periodic_calculate
                 if (is_avail_time_diff) return true
                 return false
             } else {
