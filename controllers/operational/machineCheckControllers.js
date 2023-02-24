@@ -12,16 +12,19 @@ module.exports = {
 	tmmcp.machine_id,
 	tmmcp.machine_nm,
 	tbmmtp.maintenance_nm,
-	subchecksheet.*
+	subchecksheet.*,
+	subtask.*
 FROM 
 	tb_r_periodic_check trpcp
+left join tb_r_tasks trt 
+	on trpcp.periodic_check_id = trt.periodic_check_id 
 JOIN 
 	tb_m_maintenance tbmmtp
 	ON trpcp.maintenance_id = tbmmtp.maintenance_id
 JOIN 
 	tb_m_machines tmmcp
 	ON tmmcp.machine_id = trpcp.machine_id
-LEFT JOIN 
+JOIN 
 	(
 		SELECT 
 			tmcspc.checksheet_id,
@@ -36,11 +39,7 @@ LEFT JOIN
 			tmoptrc.max_value,
 			tmrc.rule_id,
 			tmrc.rules_nm,
-			tmrc.rule_lvl,
-			trt.task_id,
-			trt.param_id AS task_param_id,
-			trt.option_id AS task_opt_id,
-			trt.task_value 
+			tmrc.rule_lvl
 		FROM 
 			tb_m_checksheets tmcspc
 		JOIN 
@@ -58,10 +57,23 @@ LEFT JOIN
 		LEFT JOIN 
 			tb_m_rules tmrc
 			ON tmrc.rule_id = tmoptc.rule_id
-		left join tb_r_tasks trt 
-			on trt.param_id = tmparc.param_id
 	) AS subchecksheet
 	ON subchecksheet.checksheet_id = tbmmtp.checksheet_id
+left join (
+	select 
+		trt2.task_id,
+    	trt2.task_value,
+   		trt2.task_status,
+    	trt2.param_id as task_param_id,
+    	trt2.option_id as task_opt_id,
+    	tmr2.rules_nm,
+    	tmr2.rule_lvl,
+    	tmr2.color 
+	from tb_r_tasks trt2
+	 join tb_m_rules tmr2
+	 	on tmr2.rule_id = trt2.rule_id 
+) AS subtask 
+	on subchecksheet.option_id = subtask.task_opt_id 
 where tmmcp.machine_id = ${req.params.machine_id} AND
 subchecksheet.checksheet_id IS NOT null and
 trpcp.periodic_check_id =  (
@@ -69,7 +81,10 @@ trpcp.periodic_check_id =  (
 	from tb_r_periodic_check trpcc 
 	where tbmmtp.maintenance_id = trpcc.maintenance_id and
 	trpcc.machine_id =tmmcp.machine_id 
-	)`
+	)
+order by trpcp.periodic_check_id;
+
+`
             await queryCustom(q)
                 .then(async(result) => {
                     let containerChecksheet = []
