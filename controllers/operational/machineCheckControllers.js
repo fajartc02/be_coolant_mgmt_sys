@@ -83,7 +83,6 @@ trpcp.periodic_check_id =  (
 	trpcc.machine_id =tmmcp.machine_id 
 	)
 order by trpcp.periodic_check_id;
-
 `
             await queryCustom(q)
                 .then(async(result) => {
@@ -91,7 +90,6 @@ order by trpcp.periodic_check_id;
                     await result.rows.forEach((item, i) => {
                         let findChecksheet = containerChecksheet.find(cs => cs.checksheet_id === item.checksheet_id)
                         let obj;
-                        console.log(findChecksheet);
                         if (!findChecksheet) {
                             obj = {
                                 periodic_check_id: item.periodic_check_id,
@@ -122,11 +120,11 @@ order by trpcp.periodic_check_id;
             console.log(error);
             response.error(res, error)
         }
-
     },
     postChecksheetList: async(req, res) => {
         try {
             let q = ``
+            console.log(req.body);
         } catch (error) {
             console.log(error);
             response.error(res, error)

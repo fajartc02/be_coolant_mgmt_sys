@@ -1,15 +1,31 @@
-const table = 'tb_m_machines'
-const { queryGET, queryPOST } = require('../../helpers/query')
+const table = require('../../config/table')
+const { queryGET, queryCustom } = require('../../helpers/query')
 const response = require('../../helpers/response')
 module.exports = {
-    getData: async (req, res) => {
+    getData: async(req, res) => {
         try {
             let whereCond = ''
-            if (req.params._id) {
-                whereCond = ` AND machine_id = ${req.params._id}`
+            if (req.params.machine_id) {
+                whereCond = ` AND machine_id = ${req.params.machine_id}`
             }
-            await queryGET(table).then((result) => {
+            await queryGET(table.tb_m_machines).then((result) => {
                 response.success(res, 'Success to get all machines', result)
+            })
+        } catch (error) {
+            response.failed(res, error)
+        }
+    },
+    getDataWithLine: async(req, res) => {
+        try {
+            let q = `SELECT
+                        tmmc.*,
+                        tml.line_nm
+                    FROM ${table.tb_m_machines} tmmc
+                    JOIN ${table.tb_m_lines} tml
+                    ON tmmc.line_id = tml.line_id`
+            console.log(q);
+            await queryCustom(q).then((result) => {
+                response.success(res, 'Success to get all machines', result.rows)
             })
         } catch (error) {
             response.failed(res, error)
