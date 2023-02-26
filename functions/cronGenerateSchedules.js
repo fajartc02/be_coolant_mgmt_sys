@@ -1,4 +1,4 @@
-const { queryGET, queryPOST, queryCustom } = require('../helpers/query')
+const { queryGET, queryPOST, queryCustom, queryPUT } = require('../helpers/query')
 const tb_r_mt_schedules = 'tb_r_mt_schedules'
 const tb_r_periodic_check = 'tb_r_periodic_check'
 const tb_m_machines = 'tb_m_machines'
@@ -94,9 +94,9 @@ async function insertPeriodicForCheck(machine_id, maintenance_id, created_dt, mt
     let convStrDate = String(created_dt)
     let formaterDate = `${convStrDate.split('T')[0]} ${convStrDate.split('T')[1].split('.')[0]}`
     await queryPOST(tb_r_periodic_check, { machine_id, maintenance_id, created_dt: formaterDate, changed_dt: formaterDate, mt_schedule_id })
-        .then((result) => {
+        .then(async(result) => {
             console.log(result);
-
+            await queryPUT(tb_r_mt_schedules, { last_created_periodic_date: formaterDate }, `WHERE mt_schedule_id = ${mt_schedule_id}`)
         }).catch((err) => {
             console.log(err);
             queryPOST(tb_r_cron_log, { msg: `Error Cron RUN at fn insertPeriodicForCheck()`, status_msg: 'ERROR' })

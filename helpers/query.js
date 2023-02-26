@@ -82,7 +82,7 @@ module.exports = {
         return new Promise(async(resolve, reject) => {
             let containerSetValues = []
             for (const key in data) {
-                containerSetValues.push(`${key} = '${values}'`)
+                containerSetValues.push(`${key} = '${data[key]}'`)
             }
 
             let q = `UPDATE ${table} SET ${containerSetValues.join(',')} ${whereCond}`
