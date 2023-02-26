@@ -11,6 +11,7 @@ async function cronGenerateSchedules() {
     try {
         let q = `SELECT
 	tmmtp.maintenance_id,
+    trmts.mt_schedule_id,
     trmts.periodic_val,
 	tmmtp.maintenance_nm, 
 	tmper.periodic_nm,
@@ -31,9 +32,10 @@ JOIN ${tb_m_maintenance} tmmtp
                 if (resData.length > 0) {
                     console.log(resData);
                     let mapDataCheck = await resData.map(async itm => {
+                        console.log(itm);
                         return await {
                             ...itm,
-                            is_tr_avail: await checkTransactionGenerate(itm.machine_id, itm.maintenance_id, itm.periodic_precision * itm.periodic_val)
+                            is_tr_avail: await checkTransactionGenerate(itm.machine_id, itm.maintenance_id, itm.periodic_precision * itm.periodic_val, itm.mt_schedule_id)
                         }
                     })
                     let resWaitPromise = await Promise.all(mapDataCheck)
@@ -47,7 +49,7 @@ JOIN ${tb_m_maintenance} tmmtp
                             } else {
                                 // CREATE PERIODIC CHECK
                                 console.log(item);
-                                insertPeriodicForCheck(item.machine_id, item.maintenance_id, created_dt)
+                                insertPeriodicForCheck(item.machine_id, item.maintenance_id, created_dt, item.mt_schedule_id)
                             }
                             if (i + 1 == resWaitPromise.length) {
                                 // CREATE LOG CRON ONLY 1 ALREADY GENERATE
@@ -68,10 +70,10 @@ JOIN ${tb_m_maintenance} tmmtp
 }
 
 
-async function checkTransactionGenerate(machine_id, maintenance_id, periodic_calculate) {
+async function checkTransactionGenerate(machine_id, maintenance_id, periodic_calculate, mt_schedule_id) {
     // if EXTRACT(EPOCH FROM (created_dt - NOW())) AS days_diff
 
-    return await queryGET(tb_r_periodic_check, ` WHERE machine_id = ${machine_id} AND maintenance_id = ${maintenance_id} AND start_date IS NULL ORDER BY created_dt DESC LIMIT 1`, ['machine_id', 'maintenance_id', `DATE_PART('day', NOW() - created_dt) AS days_diff`])
+    return await queryGET(tb_r_periodic_check, ` WHERE machine_id = ${machine_id} AND maintenance_id = ${maintenance_id} AND mt_schedule_id = ${mt_schedule_id} AND start_date IS NULL ORDER BY created_dt DESC LIMIT 1`, ['machine_id', 'maintenance_id', `DATE_PART('day', NOW() - created_dt) AS days_diff`])
         .then((result) => {
             let is_avail = result.length > 0
             if (is_avail) {
@@ -87,11 +89,11 @@ async function checkTransactionGenerate(machine_id, maintenance_id, periodic_cal
         });
 }
 
-async function insertPeriodicForCheck(machine_id, maintenance_id, created_dt) {
+async function insertPeriodicForCheck(machine_id, maintenance_id, created_dt, mt_schedule_id) {
     console.log(created_dt);
     let convStrDate = String(created_dt)
     let formaterDate = `${convStrDate.split('T')[0]} ${convStrDate.split('T')[1].split('.')[0]}`
-    await queryPOST(tb_r_periodic_check, { machine_id, maintenance_id, created_dt: formaterDate, changed_dt: formaterDate })
+    await queryPOST(tb_r_periodic_check, { machine_id, maintenance_id, created_dt: formaterDate, changed_dt: formaterDate, mt_schedule_id })
         .then((result) => {
             console.log(result);
 
