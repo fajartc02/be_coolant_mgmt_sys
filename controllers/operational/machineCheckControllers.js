@@ -91,6 +91,7 @@ order by trpcp.periodic_check_id;
                     await result.rows.forEach((item, i) => {
                         let findChecksheet = containerChecksheet.find(cs => cs.checksheet_id === item.checksheet_id)
                         let obj;
+                        let objOpt = { option_id: item.option_id, opt_nm: item.opt_nm, min_value: item.min_value, units: item.units, max_value: item.max_value, rule_id: item.rule_id, rules_nm: item.rules_nm, rule_lvl: item.rule_lvl, selected_opt: item.task_opt_id ? true : false }
                         if (!findChecksheet) {
                             obj = {
                                 periodic_check_id: item.periodic_check_id,
@@ -100,16 +101,16 @@ order by trpcp.periodic_check_id;
                                 machine_nm: item.machine_nm,
                                 maintenance_nm: item.maintenance_nm,
                                 check_param_id: item.check_param_id,
-                                parameters: [{ param_id: item.param_id, param_nm: item.param_nm, options: [{ option_id: item.option_id, opt_nm: item.opt_nm, min_value: item.min_value, units: item.units, max_value: item.max_value, rule_id: item.rule_id, rules_nm: item.rules_nm, rule_lvl: item.rule_lvl, selected_opt: item.task_opt_id ? true : false }] }]
+                                parameters: [{ param_id: item.param_id, param_nm: item.param_nm, options: [objOpt] }]
                             }
                             containerChecksheet.push(obj)
                         } else {
                             let findParameter = findChecksheet.parameters.find(param => param.param_id === item.param_id)
                                 // console.log(item);
                             if (!findParameter) {
-                                findChecksheet.parameters.push({ param_id: item.param_id, param_nm: item.param_nm, options: [{ option_id: item.option_id, opt_nm: item.opt_nm, min_value: item.min_value, units: item.units, max_value: item.max_value, rule_id: item.rule_id, rules_nm: item.rules_nm, rule_lvl: item.rule_lvl, selected_opt: item.task_opt_id ? true : false }] })
+                                findChecksheet.parameters.push({ param_id: item.param_id, param_nm: item.param_nm, options: [objOpt] })
                             } else {
-                                findParameter.options.push({ option_id: item.option_id, opt_nm: item.opt_nm, min_value: item.min_value, max_value: item.max_value, rule_id: item.rule_id, rules_nm: item.rules_nm, units: item.units, rule_lvl: item.rule_lvl, selected_opt: item.task_opt_id ? true : false })
+                                findParameter.options.push(objOpt)
                             }
                         }
                         // return containerChecksheet
