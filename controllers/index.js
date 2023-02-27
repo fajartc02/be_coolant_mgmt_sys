@@ -41,6 +41,7 @@ module.exports = {
     },
     machineCheck: {
         getChecksheetList: machineCheck.getChecksheetList,
-        postChecksheetList: machineCheck.postChecksheetList
+        postChecksheetList: machineCheck.postChecksheetList,
+        getMaintenanceMachine: machineCheck.getMaintenanceMachine
     }
 }

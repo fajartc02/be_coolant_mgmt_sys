@@ -340,29 +340,6 @@
     "tests": []
   },
   {
-    "_id": "0aea07c1-0f00-486b-963a-a16199afcf27",
-    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
-    "containerId": "78e9171c-6336-4d16-811d-ee58f5dd7d9c",
-    "name": "Pengecekan Chemical",
-    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/checksheet/check/machine/40",
-    "method": "POST",
-    "sortNum": 100000,
-    "created": "2023-02-22T07:50:06.665Z",
-    "modified": "2023-02-24T17:46:01.822Z",
-    "headers": [],
-    "params": [],
-    "body": {
-      "type": "json",
-      "raw": "{\n  \"periodic_check_id\" : 1,\n  \"start_date\": \"2023/02/22 10:00:00\",\n  \"finish_date\": \"2023/02/22 10:10:00\",\n  \"pic\": 1,\n  \"color_status\": \"#ffbb00\",\n  \"rule_id\": 2,\n  \"group_id\": 1,\n  \"notes\": \"lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet\",\n  \"chemical_changes\": [{\n    \"task_id\": 1,\n    \"chemical_id\": 1,\n    \"vol_changes\": 2,\n    \"cost_chemical\": 120000\n  },\n  {\n    \"chemical_id\": 2,\n    \"vol_changes\": 3,\n    \"cost_chemical\": 100000\n  }],\n  \"tasks\": [{\n    \"param_id\": 4,\n    \"option_id\": 2,\n    \"task_value\": null,\n    \"task_status\": \"Warning\",\n    \"rule_id\": 3\n  },\n  {\n    \"param_id\": 6,\n    \"option_id\": 10,\n    \"task_value\": null,\n    \"task_status\": \"Normal\",\n    \"rule_id\": 2\n  }]\n}",
-      "form": []
-    },
-    "auth": {
-      "type": "bearer",
-      "bearer": "{{token}}"
-    },
-    "tests": []
-  },
-  {
     "_id": "aca70201-3bf7-49d0-8f56-1fb389aea336",
     "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
     "containerId": "a76b2081-75a3-42ea-988d-9da7bda94036",
@@ -446,6 +423,35 @@
     "modified": "2023-02-24T16:58:52.948Z",
     "headers": [],
     "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "7a8665f8-5388-4d05-827c-03b092a50d7c",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "da9de551-c3c9-454d-8ba3-900a6d29a38a",
+    "name": "Check Maintenance Machine",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/1?start_date=2023-02-27 07:00:00&end_date=2023-02-28 06:00:00",
+    "method": "GET",
+    "sortNum": 150000,
+    "created": "2023-02-27T11:41:54.926Z",
+    "modified": "2023-02-27T11:43:59.201Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "start_date",
+        "value": "2023-02-27 07:00:00",
+        "isPath": false
+      },
+      {
+        "name": "end_date",
+        "value": "2023-02-28 06:00:00",
+        "isPath": false
+      }
+    ],
     "auth": {
       "type": "bearer",
       "bearer": "{{token}}"
