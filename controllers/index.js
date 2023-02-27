@@ -40,8 +40,7 @@ module.exports = {
         getData: linesSummaries.getData
     },
     machineCheck: {
-        getChecksheetList: machineCheck.getChecksheetList,
-        postChecksheetList: machineCheck.postChecksheetList,
-        getMaintenanceMachine: machineCheck.getMaintenanceMachine
+        getMaintenanceMachine: machineCheck.getMaintenanceMachine,
+        getMtMachineChecksheet: machineCheck.getMtMachineChecksheet
     }
 }

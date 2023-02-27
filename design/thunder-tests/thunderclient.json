@@ -433,12 +433,12 @@
     "_id": "7a8665f8-5388-4d05-827c-03b092a50d7c",
     "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
     "containerId": "da9de551-c3c9-454d-8ba3-900a6d29a38a",
-    "name": "Check Maintenance Machine",
-    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/1?start_date=2023-02-27 07:00:00&end_date=2023-02-28 06:00:00",
+    "name": "Maintenance Machine Check",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/2?start_date=2023-02-27 07:00:00&end_date=2023-02-28 06:00:00",
     "method": "GET",
     "sortNum": 150000,
     "created": "2023-02-27T11:41:54.926Z",
-    "modified": "2023-02-27T11:43:59.201Z",
+    "modified": "2023-02-27T16:17:41.705Z",
     "headers": [],
     "params": [
       {
@@ -457,5 +457,65 @@
       "bearer": "{{token}}"
     },
     "tests": []
+  },
+  {
+    "_id": "72b003b2-3ff7-4b9a-a6ef-f4f771880706",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "da9de551-c3c9-454d-8ba3-900a6d29a38a",
+    "name": "Maintenance Machine CS (pengecekan)",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/checksheet/390?machine_id=1",
+    "method": "GET",
+    "sortNum": 160000,
+    "created": "2023-02-27T15:01:16.498Z",
+    "modified": "2023-02-27T16:29:00.236Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "machine_id",
+        "value": "1",
+        "isPath": false
+      }
+    ],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "4085b21b-3534-44a3-8b4b-f5875f1d8048",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "da9de551-c3c9-454d-8ba3-900a6d29a38a",
+    "name": "Maintenance Machine CS (pengurasan)",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/checksheet/449?machine_id=2",
+    "method": "GET",
+    "sortNum": 170000,
+    "created": "2023-02-27T15:40:12.775Z",
+    "modified": "2023-02-27T17:13:35.250Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "machine_id",
+        "value": "2",
+        "isPath": false
+      }
+    ],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "05862968-62a9-4311-ba31-1e31241e392c",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "da9de551-c3c9-454d-8ba3-900a6d29a38a",
+    "name": "MT Machine Chemical Changes",
+    "url": "",
+    "method": "GET",
+    "sortNum": 170000,
+    "created": "2023-02-27T15:52:49.083Z",
+    "modified": "2023-02-27T15:52:49.083Z",
+    "headers": []
   }
 ]
