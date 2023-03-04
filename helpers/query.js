@@ -51,23 +51,26 @@ module.exports = {
         })
     },
     queryBulkPOST: async(table, data) => {
-        console.log(data);
         return new Promise(async(resolve, reject) => {
             let containerColumn = []
             let containerValues = []
             let mapBulkData = data.map(item => {
                 containerValues = []
-                console.log(item);
                 for (const key in item) {
-                    if (key != 'childs') containerValues.push(`'${item[key]}'`)
+                    if (key != 'childs') {
+                        if (item[key]) {
+                            containerValues.push(`'${item[key]}'`)
+                        } else {
+                            containerValues.push(`NULL`)
+                        }
+                    }
                 }
-                console.log(containerValues);
                 return `(${containerValues.join(',')})`
             })
             for (const key in data[0]) {
                 containerColumn.push(key)
             }
-            let q = `INSERT INTO ${table}(${containerColumn.join(',')}) VALUES ${mapBulkData.join(',')} RETURNING *`
+            let q = `INSERT INTO ${table} (${containerColumn.join(',')}) VALUES ${mapBulkData.join(',')} RETURNING *`
             console.log(q);
             await database.query(q)
                 .then((result) => {

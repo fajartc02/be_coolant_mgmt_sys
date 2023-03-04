@@ -473,7 +473,7 @@
     "method": "GET",
     "sortNum": 170000,
     "created": "2023-02-27T15:40:12.775Z",
-    "modified": "2023-03-01T14:55:34.562Z",
+    "modified": "2023-03-04T03:06:31.202Z",
     "headers": [],
     "params": [
       {
@@ -616,7 +616,7 @@
     "method": "GET",
     "sortNum": 220000,
     "created": "2023-03-04T02:35:23.534Z",
-    "modified": "2023-03-04T03:02:11.134Z",
+    "modified": "2023-03-04T03:08:03.830Z",
     "headers": [],
     "params": [
       {
@@ -635,6 +635,52 @@
         "isPath": false
       }
     ],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "35239a7f-18de-4351-b8dc-fb83e06690b9",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "da9de551-c3c9-454d-8ba3-900a6d29a38a",
+    "name": "Chemical Changes",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/chemicals",
+    "method": "POST",
+    "sortNum": 230000,
+    "created": "2023-03-04T03:20:42.538Z",
+    "modified": "2023-03-04T03:42:25.550Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"periodic_check_id\": 330,\n  \"start_date\": \"2023-03-04 10:38:00\",\n  \"finish_date\": \"2023-03-04 10:40:00\",\n  \"pic\": 1,\n  \"group_id\": 2,\n  \"chemicals\": [\n    {\n       \"chemical_id\": 1,\n        \"vol_changes\": 2,\n        \"cost_chemical\": 90000,\n        \"periodic_check_id\": 330\n    }\n  ]\n}",
+      "form": []
+    },
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "6ec2b293-1311-4127-8367-ef0c352cb67a",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "da9de551-c3c9-454d-8ba3-900a6d29a38a",
+    "name": "Chemical Changes Check",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/chemicals/check",
+    "method": "POST",
+    "sortNum": 240000,
+    "created": "2023-03-04T09:00:47.720Z",
+    "modified": "2023-03-04T09:20:26.326Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"periodic_check_id\": 330,\n  \"parameters_check\": [\n    {\n        \"periodic_check_id\": 330,\n        \"param_id\": 4,\n        \"option_id\": 1,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 330,\n        \"param_id\": 5,\n        \"option_id\": 6,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 330,\n        \"param_id\": 6,\n        \"option_id\": 10,\n        \"task_value\": 4,\n        \"task_status\": \"OK\",\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 330,\n        \"param_id\": 7,\n        \"option_id\": 11,\n        \"task_value\": 5,\n        \"task_status\": \"OK\",\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 330,\n        \"param_id\": 8,\n        \"option_id\": 9,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    }\n  ]\n}",
+      "form": []
+    },
     "auth": {
       "type": "bearer",
       "bearer": "{{token}}"
