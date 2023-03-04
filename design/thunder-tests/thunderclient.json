@@ -449,7 +449,7 @@
     "method": "GET",
     "sortNum": 160000,
     "created": "2023-02-27T15:01:16.498Z",
-    "modified": "2023-03-01T16:33:09.826Z",
+    "modified": "2023-03-04T10:24:46.626Z",
     "headers": [],
     "params": [
       {
@@ -469,16 +469,16 @@
     "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
     "containerId": "da9de551-c3c9-454d-8ba3-900a6d29a38a",
     "name": "Maintenance Machine CS (pengurasan)",
-    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/checksheet/61?machine_id=3",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/checksheet/330?machine_id=1",
     "method": "GET",
     "sortNum": 170000,
     "created": "2023-02-27T15:40:12.775Z",
-    "modified": "2023-03-04T03:06:31.202Z",
+    "modified": "2023-03-04T09:33:05.399Z",
     "headers": [],
     "params": [
       {
         "name": "machine_id",
-        "value": "3",
+        "value": "1",
         "isPath": false
       }
     ],
@@ -644,13 +644,13 @@
   {
     "_id": "35239a7f-18de-4351-b8dc-fb83e06690b9",
     "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
-    "containerId": "da9de551-c3c9-454d-8ba3-900a6d29a38a",
+    "containerId": "f9163bee-880b-4060-9839-6cf3b15d7367",
     "name": "Chemical Changes",
     "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/chemicals",
     "method": "POST",
-    "sortNum": 230000,
+    "sortNum": 10000,
     "created": "2023-03-04T03:20:42.538Z",
-    "modified": "2023-03-04T03:42:25.550Z",
+    "modified": "2023-03-04T09:32:28.316Z",
     "headers": [],
     "params": [],
     "body": {
@@ -667,18 +667,18 @@
   {
     "_id": "6ec2b293-1311-4127-8367-ef0c352cb67a",
     "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
-    "containerId": "da9de551-c3c9-454d-8ba3-900a6d29a38a",
+    "containerId": "f9163bee-880b-4060-9839-6cf3b15d7367",
     "name": "Chemical Changes Check",
     "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/chemicals/check",
     "method": "POST",
-    "sortNum": 240000,
+    "sortNum": 20000,
     "created": "2023-03-04T09:00:47.720Z",
-    "modified": "2023-03-04T09:20:26.326Z",
+    "modified": "2023-03-04T10:49:27.557Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"periodic_check_id\": 330,\n  \"parameters_check\": [\n    {\n        \"periodic_check_id\": 330,\n        \"param_id\": 4,\n        \"option_id\": 1,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 330,\n        \"param_id\": 5,\n        \"option_id\": 6,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 330,\n        \"param_id\": 6,\n        \"option_id\": 10,\n        \"task_value\": 4,\n        \"task_status\": \"OK\",\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 330,\n        \"param_id\": 7,\n        \"option_id\": 11,\n        \"task_value\": 5,\n        \"task_status\": \"OK\",\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 330,\n        \"param_id\": 8,\n        \"option_id\": 9,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    }\n  ]\n}",
+      "raw": "{\n  \"periodic_check_id\": 330,\n  \"checksheet_id\": 1,\n  \"parameters_check\": [\n    {\n        \"periodic_check_id\": 330,\n        \"param_id\": 4,\n        \"option_id\": 1,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 330,\n        \"param_id\": 5,\n        \"option_id\": 6,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 330,\n        \"param_id\": 6,\n        \"option_id\": 10,\n        \"task_value\": 4,\n        \"task_status\": \"OK\",\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 330,\n        \"param_id\": 7,\n        \"option_id\": 11,\n        \"task_value\": 5,\n        \"task_status\": \"OK\",\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 330,\n        \"param_id\": 8,\n        \"option_id\": 9,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    }\n  ]\n}",
       "form": []
     },
     "auth": {
