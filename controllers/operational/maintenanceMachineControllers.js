@@ -435,6 +435,7 @@ where trpc.machine_id = ${req.query.machine_id} and trpc.periodic_check_id = ${r
 					LEFT JOIN 
 						tb_m_rules tmrc
 						ON tmrc.rule_id = tmoptc.rule_id
+					ORDER BY tmrc.rule_lvl ASC
 				) AS subchecksheet
 				ON subchecksheet.checksheet_id = tmmt.checksheet_id
 			left join (
