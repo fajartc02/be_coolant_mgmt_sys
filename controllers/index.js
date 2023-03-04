@@ -41,6 +41,7 @@ module.exports = {
     },
     machineCheck: {
         getMaintenanceMachine: machineCheck.getMaintenanceMachine,
-        getMtMachineChecksheet: machineCheck.getMtMachineChecksheet
+        getMtMachineChecksheet: machineCheck.getMtMachineChecksheet,
+        getChecksheetTask: machineCheck.getChecksheetTask
     }
 }

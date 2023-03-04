@@ -385,6 +385,119 @@ where trpc.machine_id = ${req.query.machine_id} and trpc.periodic_check_id = ${r
         }
 
     },
+    getChecksheetTask: async(req, res) => {
+
+        try {
+            let q = `select 
+				tmmt.maintenance_id,
+				tmmt.maintenance_nm,
+				trms.mt_schedule_id,
+				subchecksheet.*,
+				subtask.*
+			from tb_m_maintenance tmmt
+			join
+				tb_r_mt_schedules trms 
+				on trms.maintenance_id = tmmt.maintenance_id 
+			JOIN 
+				tb_m_machines tmm
+				ON tmm.machine_id = trms.machine_id
+				JOIN 
+				(
+					SELECT 
+						tmcspc.checksheet_id,
+						tmcspc.checksheet_nm,
+						tmparc.param_id,
+						tmparc.param_nm,
+						tmcpc.check_param_id,
+						tmoptc.option_id,
+						tmoptc.opt_nm,
+						tmoptrc.ranged_id,
+						tmoptrc.min_value,
+						tmoptrc.max_value,
+						tmparc.units,
+						tmrc.rule_id,
+						tmrc.rules_nm,
+						tmrc.rule_lvl
+					FROM 
+						tb_m_checksheets tmcspc
+					JOIN 
+						tb_m_check_params tmcpc
+						ON tmcspc.checksheet_id = tmcpc.checksheet_id
+					JOIN 
+						tb_m_parameters tmparc
+						ON tmparc.param_id = tmcpc.param_id
+					JOIN 
+						tb_m_options tmoptc
+						ON tmoptc.param_id = tmparc.param_id
+					LEFT JOIN 
+						tb_m_options_ranged tmoptrc
+						ON tmoptrc.option_id = tmoptc.option_id
+					LEFT JOIN 
+						tb_m_rules tmrc
+						ON tmrc.rule_id = tmoptc.rule_id
+				) AS subchecksheet
+				ON subchecksheet.checksheet_id = tmmt.checksheet_id
+			left join (
+				select 
+					trt2.task_id,
+					trt2.task_value,
+					trt2.task_status,
+					trt2.param_id as task_param_id,
+					trt2.option_id as task_opt_id,
+					tmr2.rules_nm,
+					tmr2.rule_lvl,
+					tmr2.color,
+					tmr2.created_dt 
+				from tb_r_tasks trt2
+				join tb_m_rules tmr2
+					on tmr2.rule_id = trt2.rule_id
+				where trt2.periodic_check_id = (
+					select trpc.periodic_check_id 
+					from tb_r_periodic_check trpc
+					where trpc.periodic_check_id = ${req.query.periodic_check_id}
+				)
+			) AS subtask 
+				on subchecksheet.option_id = subtask.task_opt_id
+			where tmm.machine_id = ${req.query.machine_id} and subchecksheet.checksheet_id = ${req.query.checksheet_id}`
+            console.log(q);
+            await queryCustom(q)
+                .then(async result => {
+                    let containerChecksheet = []
+                    await result.rows.forEach((item, i) => {
+                        let findChecksheet = containerChecksheet.find(cs => cs.checksheet_id === item.checksheet_id)
+                        let obj;
+                        let objOpt = { option_id: item.option_id, opt_nm: item.opt_nm, min_value: item.min_value, units: item.units, max_value: item.max_value, rule_id: item.rule_id, rules_nm: item.rules_nm, rule_lvl: item.rule_lvl, selected_opt: item.task_opt_id ? true : false }
+                        if (!findChecksheet) {
+                            obj = {
+                                periodic_check_id: item.periodic_check_id,
+                                maintenance_id: item.maintenance_id,
+                                checksheet_id: item.checksheet_id,
+                                machine_id: item.machine_id,
+                                machine_nm: item.machine_nm,
+                                maintenance_nm: item.maintenance_nm,
+                                check_param_id: item.check_param_id,
+                                parameters: [{ param_id: item.param_id, param_nm: item.param_nm, options: [objOpt] }]
+                            }
+                            containerChecksheet.push(obj)
+                        } else {
+                            let findParameter = findChecksheet.parameters.find(param => param.param_id === item.param_id)
+                                // console.log(item);
+                            if (!findParameter) {
+                                findChecksheet.parameters.push({ param_id: item.param_id, param_nm: item.param_nm, options: [objOpt] })
+                            } else {
+                                findParameter.options.push(objOpt)
+                            }
+                        }
+                        // return containerChecksheet
+                    })
+                    response.success(res, 'success to get maintenance checksheet', containerChecksheet)
+                })
+        } catch (error) {
+            console.log(error);
+            response.failed(res, error)
+        }
+
+    },
     postChemicalChanges: async(req, res) => {
         let qCheckAfterChemicalChanges = `select 
 	trms.mt_schedule_id,
