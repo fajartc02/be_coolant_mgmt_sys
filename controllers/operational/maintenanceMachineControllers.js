@@ -1,5 +1,5 @@
 const table = require('../../config/table')
-const { queryCustom, queryGET } = require('../../helpers/query')
+const { queryCustom, queryGET, queryBulkPOST } = require('../../helpers/query')
 const response = require('../../helpers/response')
 
 
@@ -444,9 +444,9 @@ where trpc.machine_id = ${req.query.machine_id} and trpc.periodic_check_id = ${r
 					trt2.task_status,
 					trt2.param_id as task_param_id,
 					trt2.option_id as task_opt_id,
-					tmr2.rules_nm,
-					tmr2.rule_lvl,
-					tmr2.color,
+					tmr2.rules_nm as task_rule_nm,
+    				tmr2.rule_lvl as task_rules_lvl,
+    				tmr2.color as task_rules_color,
 					tmr2.created_dt 
 				from tb_r_tasks trt2
 				join tb_m_rules tmr2
@@ -497,77 +497,5 @@ where trpc.machine_id = ${req.query.machine_id} and trpc.periodic_check_id = ${r
             response.failed(res, error)
         }
 
-    },
-    postChemicalChanges: async(req, res) => {
-        let qCheckAfterChemicalChanges = `select 
-	trms.mt_schedule_id,
-	trms.machine_id,
-	tmm2.machine_nm,
-	trms.maintenance_id,
-	tmm.maintenance_id,
-	subchecksheet.*,
-	subtask.*
-from tb_r_mt_schedules trms 
- join tb_m_maintenance tmm 
- 	on tmm.maintenance_id = trms.maintenance_id 
- join tb_m_machines tmm2 
- 	on tmm2.machine_id = trms .machine_id
-JOIN 
-	(
-		SELECT 
-			tmcspc.checksheet_id,
-			tmcspc.checksheet_nm,
-			tmparc.param_id,
-			tmparc.param_nm,
-            tmcpc.check_param_id,
-			tmoptc.option_id,
-			tmoptc.opt_nm,
-			tmoptrc.ranged_id,
-			tmoptrc.min_value,
-			tmoptrc.max_value,
-            tmparc.units,
-			tmrc.rule_id,
-			tmrc.rules_nm,
-			tmrc.rule_lvl
-		FROM 
-			tb_m_checksheets tmcspc
-		JOIN 
-			tb_m_check_params tmcpc
-			ON tmcspc.checksheet_id = tmcpc.checksheet_id
-		JOIN 
-			tb_m_parameters tmparc
-			ON tmparc.param_id = tmcpc.param_id
-		JOIN 
-			tb_m_options tmoptc
-			ON tmoptc.param_id = tmparc.param_id
-		LEFT JOIN 
-			tb_m_options_ranged tmoptrc
-			ON tmoptrc.option_id = tmoptc.option_id
-		LEFT JOIN 
-			tb_m_rules tmrc
-			ON tmrc.rule_id = tmoptc.rule_id
-	) AS subchecksheet
-	ON subchecksheet.checksheet_id = tmm.checksheet_id
-left join (
-	select 
-		trt2.task_id,
-    	trt2.task_value,
-   		trt2.task_status,
-    	trt2.param_id as task_param_id,
-    	trt2.option_id as task_opt_id,
-    	tmr2.rules_nm as task_rule_nm,
-    	tmr2.rule_lvl as task_rules_lvl,
-    	tmr2.color  as task_rules_color
-	from tb_r_tasks trt2
-	 join tb_r_periodic_check trpcc
-	 	on trpcc.periodic_check_id = trt2.periodic_check_id
-	 left join tb_m_rules tmr2
-	 	on trt2.rule_id = tmr2.rule_id
-	 where trpcc.periodic_check_id = ${req.params.periodic_check_id}
-) AS subtask 
-	on subchecksheet.option_id = subtask.task_opt_id 
- where tmm2.machine_id = ${req.query.machine_id} and subchecksheet.checksheet_id is not null`
-        let qPostChemicalChanges = ``
-        await queryCustom()
     }
 }
