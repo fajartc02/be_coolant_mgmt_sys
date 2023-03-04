@@ -266,6 +266,7 @@ left join (
 	 left join tb_m_rules tmr2
 	 	on trt2.rule_id = tmr2.rule_id
 	 where trpcc.periodic_check_id = ${req.params.periodic_check_id}
+	 order by trt2.created_dt DESC
 ) AS subtask 
 	on subchecksheet.option_id = subtask.task_opt_id 
 where tmmcp.machine_id = ${req.query.machine_id} AND
@@ -352,7 +353,7 @@ select * from tb_r_tasks where periodic_check_id = ${req.params.periodic_check_i
 				select 
 					trt2.task_id,
 					trt2.task_value,
-					   trt2.task_status,
+					trt2.task_status,
 					trt2.param_id as task_param_id,
 					trt2.option_id as task_opt_id,
 					tmr2.rules_nm as task_rule_nm,
@@ -364,6 +365,7 @@ select * from tb_r_tasks where periodic_check_id = ${req.params.periodic_check_i
 				 left join tb_m_rules tmr2
 					 on trt2.rule_id = tmr2.rule_id
 				 where trpcc.periodic_check_id = ${req.params.periodic_check_id}
+				 order by trt2.created_dt DESC
 			) AS subtask 
 				on tmoptc.option_id = subtask.task_opt_id 
 			where tmcspc.checksheet_id = ${ref_checksheet_id} ORDER BY subtask.task_rules_lvl;
@@ -417,7 +419,10 @@ select * from tb_r_tasks where periodic_check_id = ${req.params.periodic_check_i
                                         if (!findParameter) {
                                             findChecksheet.chemical_check.push({ param_id: item.param_id, param_nm: item.param_nm, options: [objOpt] })
                                         } else {
-                                            findParameter.options.push(objOpt)
+                                            let findOptions = findParameter.options.find(opt => opt.option_id === item.option_id)
+                                            if (!findOptions) {
+                                                findParameter.options.push(objOpt)
+                                            }
                                         }
                                     }
                                 })
@@ -456,7 +461,10 @@ select * from tb_r_tasks where periodic_check_id = ${req.params.periodic_check_i
                                     if (!findParameter) {
                                         findChecksheet.parameters.push({ param_id: item.param_id, param_nm: item.param_nm, options: [objOpt] })
                                     } else {
-                                        findParameter.options.push(objOpt)
+                                        let findOptions = findParameter.options.find(opt => opt.option_id === item.option_id)
+                                        if (!findOptions) {
+                                            findParameter.options.push(objOpt)
+                                        }
                                     }
                                 }
                                 // return containerChecksheet
