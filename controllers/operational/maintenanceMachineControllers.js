@@ -271,8 +271,6 @@ left join (
 where tmmcp.machine_id = ${req.query.machine_id} AND
 subchecksheet.checksheet_id IS NOT null and
 trpcp.periodic_check_id = ${req.params.periodic_check_id}`
-                        // if (!rawResultParent.checksheet_id) {
-                        // await queryCustom(q)
                     qDetailTask += `;select 
 	tmmc.machine_chemical_id, 
 	tmmc.machine_id, 
@@ -302,8 +300,7 @@ where tmmc.machine_id = ${req.query.machine_id};select
 	trcc.chemical_change_id,
 	trcc.chemical_id as changes_checmical_id,
 	trcc.vol_changes,
-	trcc.cost_chemical,
-	trcc.task_id
+	trcc.cost_chemical
 from 
 	tb_r_periodic_check trpc
 left join tb_r_checmical_changes trcc ON trpc.periodic_check_id = trcc.periodic_check_id
@@ -369,16 +366,25 @@ select * from tb_r_tasks where periodic_check_id = ${req.params.periodic_check_i
 				 where trpcc.periodic_check_id = ${req.params.periodic_check_id}
 			) AS subtask 
 				on tmoptc.option_id = subtask.task_opt_id 
-			where tmcspc.checksheet_id = ${ref_checksheet_id} ORDER BY subtask.task_rules_lvl`
-                        // }
+			where tmcspc.checksheet_id = ${ref_checksheet_id} ORDER BY subtask.task_rules_lvl;
+			select * from tb_r_checmical_changes trcc where trcc.tasks_id is not null and trcc.periodic_check_id = ${req.params.periodic_check_id}`
                     await queryCustom(qDetailTask)
                         .then(async resultCs => {
                             // console.log(resultCs[0]);//parameters check data
                             // console.log(resultCs[1].rows); //chemical list used in machines
                             // console.log(resultCs[2]); //chemical changes data
+                            // console.log(resultCs[4]); // parameter check after changes
+                            // console.log(resultCs[5]); // parameter evaluation
+                            if (resultCs[5].rows.length > 0) {
+                                console.log(resultCs[5].rows[0].tasks_id);
+                                // let containerTasksId = []
+                                // resultCs[5].rows.forEach(itm => {
+                                //     containerTasksId = itm.tasks_id
+                                //     delete itm.tasks_id
+                                // })
+                            }
                             if (rawResultParent.checksheet_id) {
                                 let containerChecksheet = []
-                                console.log(resultCs.length);
                                 await resultCs[0].rows.forEach((item, i) => {
                                     let findChecksheet = containerChecksheet.find(cs => cs.checksheet_id === item.checksheet_id)
                                     let obj;
@@ -391,6 +397,8 @@ select * from tb_r_tasks where periodic_check_id = ${req.params.periodic_check_i
                                         rule_id: item.rule_id,
                                         rules_nm: item.rules_nm,
                                         rule_lvl: item.rule_lvl,
+                                        task_value: item.task_value,
+                                        task_status: item.task_status,
                                         selected_opt: item.task_opt_id ? true : false
                                     }
                                     if (!findChecksheet) {
@@ -430,6 +438,8 @@ select * from tb_r_tasks where periodic_check_id = ${req.params.periodic_check_i
                                     rule_id: item.rule_id,
                                     rules_nm: item.rules_nm,
                                     rule_lvl: item.rule_lvl,
+                                    task_value: item.task_value,
+                                    task_status: item.task_status,
                                     selected_opt: item.task_opt_id ? true : false
                                 }
                                 if (!findChecksheet) {
@@ -441,10 +451,8 @@ select * from tb_r_tasks where periodic_check_id = ${req.params.periodic_check_i
                                     }
                                     containerChecksheet.push(obj)
                                 } else {
-                                    console.log(containerChecksheet);
                                     let findParameter = findChecksheet.parameters.find(param => param.param_id === item.param_id)
-                                    console.log(findParameter);
-                                    // console.log(item);
+
                                     if (!findParameter) {
                                         findChecksheet.parameters.push({ param_id: item.param_id, param_nm: item.param_nm, options: [objOpt] })
                                     } else {
