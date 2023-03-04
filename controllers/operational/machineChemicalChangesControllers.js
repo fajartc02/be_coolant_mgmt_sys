@@ -46,6 +46,8 @@ module.exports = {
             console.log(error);
             response.failed(res, error)
         }
+    },
+    parametersEvaluate: async(req, res) => {
 
     }
 }

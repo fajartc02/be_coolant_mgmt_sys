@@ -10,6 +10,7 @@ router.get('/:machine_id', auth.verifyToken, machineCheck.getMaintenanceMachine)
 router.get('/checksheet/:periodic_check_id', auth.verifyToken, machineCheck.getMtMachineChecksheet)
 router.post('/chemicals', auth.verifyToken, machineChemicalChanges.postData)
 router.post('/chemicals/check', auth.verifyToken, machineChemicalChanges.checkChemical)
+router.post('/parameters/evaluate', auth.verifyToken, machineChemicalChanges.parametersEvaluate)
     // router.post('/machine/:periodic_check_id', auth.verifyToken, machineCheck.postChecksheetList)
 
 module.exports = router

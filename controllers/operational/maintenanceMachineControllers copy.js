@@ -160,8 +160,7 @@ where
 	tmg.group_nm,
 	tmmt.maintenance_id,
 	tmmt.maintenance_nm,
-	tmcs.checksheet_id,
-	trpc.checksheet_id as ref_checksheet_id 
+	tmcs.checksheet_id 
 from tb_r_periodic_check trpc 
 left join tb_m_users tmu 
 	ON tmu.user_id = trpc.pic
@@ -271,9 +270,9 @@ left join (
 where tmmcp.machine_id = ${req.query.machine_id} AND
 subchecksheet.checksheet_id IS NOT null and
 trpcp.periodic_check_id = ${req.params.periodic_check_id}`
-                        // if (!rawResultParent.checksheet_id) {
+                    if (!rawResultParent.checksheet_id) {
                         // await queryCustom(q)
-                    qDetailTask += `;select 
+                        qDetailTask += `;select 
 	tmmc.machine_chemical_id, 
 	tmmc.machine_id, 
 	tmm.machine_nm, 
@@ -315,71 +314,17 @@ left join tb_m_machines tmm on tmm.machine_id = trpc.machine_id
 left join tb_m_users tmu ON tmu.user_id = trpc.pic
 left join tb_m_group tmg 
 	ON tmg.group_id  = tmu.group_id
-where trpc.machine_id = ${req.query.machine_id} and trpc.periodic_check_id = ${req.params.periodic_check_id} and trcc.chemical_id = tmc.chemical_id;
-select * from tb_r_tasks where periodic_check_id = ${req.params.periodic_check_id}`
-                    let ref_checksheet_id = rawResultParent.ref_checksheet_id
-                    qDetailTask += `;SELECT 
-						tmcspc.checksheet_id,
-						tmcspc.checksheet_nm,
-						tmparc.param_id,
-						tmparc.param_nm,
-						tmcpc.check_param_id,
-						tmoptc.option_id,
-						tmoptc.opt_nm,
-						tmoptrc.ranged_id,
-						tmoptrc.min_value,
-						tmoptrc.max_value,
-						tmparc.units,
-						tmrc.rule_id,
-						tmrc.rules_nm,
-						tmrc.rule_lvl,
-						subtask.*
-					FROM 
-						tb_m_checksheets tmcspc
-					JOIN 
-						tb_m_check_params tmcpc
-						ON tmcspc.checksheet_id = tmcpc.checksheet_id
-					JOIN 
-						tb_m_parameters tmparc
-						ON tmparc.param_id = tmcpc.param_id
-					JOIN 
-						tb_m_options tmoptc
-						ON tmoptc.param_id = tmparc.param_id
-					LEFT JOIN 
-						tb_m_options_ranged tmoptrc
-						ON tmoptrc.option_id = tmoptc.option_id
-					LEFT JOIN 
-						tb_m_rules tmrc
-						ON tmrc.rule_id = tmoptc.rule_id
-			left join (
-				select 
-					trt2.task_id,
-					trt2.task_value,
-					   trt2.task_status,
-					trt2.param_id as task_param_id,
-					trt2.option_id as task_opt_id,
-					tmr2.rules_nm as task_rule_nm,
-					tmr2.rule_lvl as task_rules_lvl,
-					tmr2.color as task_rules_color
-				from tb_r_tasks trt2
-				 join tb_r_periodic_check trpcc
-					 on trpcc.periodic_check_id = trt2.periodic_check_id
-				 left join tb_m_rules tmr2
-					 on trt2.rule_id = tmr2.rule_id
-				 where trpcc.periodic_check_id = ${req.params.periodic_check_id}
-			) AS subtask 
-				on tmoptc.option_id = subtask.task_opt_id 
-			where tmcspc.checksheet_id = ${ref_checksheet_id} ORDER BY subtask.task_rules_lvl`
-                        // }
+where trpc.machine_id = ${req.query.machine_id} and trpc.periodic_check_id = ${req.params.periodic_check_id} and trcc.chemical_id = tmc.chemical_id;`
+                    }
                     await queryCustom(qDetailTask)
                         .then(async resultCs => {
+                            console.log(resultCs.length);
                             // console.log(resultCs[0]);//parameters check data
                             // console.log(resultCs[1].rows); //chemical list used in machines
                             // console.log(resultCs[2]); //chemical changes data
                             if (rawResultParent.checksheet_id) {
                                 let containerChecksheet = []
-                                console.log(resultCs.length);
-                                await resultCs[0].rows.forEach((item, i) => {
+                                await resultCs.rows.forEach((item, i) => {
                                     let findChecksheet = containerChecksheet.find(cs => cs.checksheet_id === item.checksheet_id)
                                     let obj;
                                     let objOpt = {
@@ -398,68 +343,33 @@ select * from tb_r_tasks where periodic_check_id = ${req.params.periodic_check_i
                                             ...headerDataObj,
                                             periodic_check_id: item.periodic_check_id,
                                             check_param_id: item.check_param_id,
-                                            chemicals: rawResultParent.checksheet_id ? [] : resultCs[1].rows,
-                                            chemical_changes: resultCs[2].rows,
-                                            chemical_check: [{ param_id: item.param_id, param_nm: item.param_nm, options: [objOpt] }]
+                                            parameters: [{ param_id: item.param_id, param_nm: item.param_nm, options: [objOpt] }]
                                         }
                                         containerChecksheet.push(obj)
                                     } else {
-                                        let findParameter = findChecksheet.chemical_check.find(param => param.param_id === item.param_id)
-
+                                        let findParameter = findChecksheet.parameters.find(param => param.param_id === item.param_id)
+                                            // console.log(item);
                                         if (!findParameter) {
-                                            findChecksheet.chemical_check.push({ param_id: item.param_id, param_nm: item.param_nm, options: [objOpt] })
+                                            findChecksheet.parameters.push({ param_id: item.param_id, param_nm: item.param_nm, options: [objOpt] })
                                         } else {
                                             findParameter.options.push(objOpt)
                                         }
                                     }
+                                    // return containerChecksheet
                                 })
                                 return response.success(res, 'Success to get checksheet task', containerChecksheet)
                             }
-
-
-                            let containerChecksheet = []
-                            await resultCs[4].rows.forEach((item) => {
-                                let findChecksheet = containerChecksheet.find(cs => cs.checksheet_id === item.checksheet_id)
-                                let obj;
-                                let objOpt = {
-                                    option_id: item.option_id,
-                                    opt_nm: item.opt_nm,
-                                    min_value: item.min_value,
-                                    units: item.units,
-                                    max_value: item.max_value,
-                                    rule_id: item.rule_id,
-                                    rules_nm: item.rules_nm,
-                                    rule_lvl: item.rule_lvl,
-                                    selected_opt: item.task_opt_id ? true : false
-                                }
-                                if (!findChecksheet) {
-                                    obj = {
-                                        periodic_check_id: item.periodic_check_id,
-                                        check_param_id: item.check_param_id,
-                                        checksheet_id: item.checksheet_id,
-                                        parameters: [{ param_id: item.param_id, param_nm: item.param_nm, options: [objOpt] }]
-                                    }
-                                    containerChecksheet.push(obj)
-                                } else {
-                                    console.log(containerChecksheet);
-                                    let findParameter = findChecksheet.parameters.find(param => param.param_id === item.param_id)
-                                    console.log(findParameter);
-                                    // console.log(item);
-                                    if (!findParameter) {
-                                        findChecksheet.parameters.push({ param_id: item.param_id, param_nm: item.param_nm, options: [objOpt] })
-                                    } else {
-                                        findParameter.options.push(objOpt)
-                                    }
-                                }
-                                // return containerChecksheet
-                            })
                             let resObjChemical = {
                                 ...headerDataObj,
                                 chemicals: resultCs[1].rows,
-                                chemical_changes: resultCs[2].rows,
-                                chemical_check: containerChecksheet
+                                chemical_changes: []
                             }
+                            let mapTask = await resultCs[2].rows.map(async chemical => {
+                                resObjChemical.chemical_changes.push(chemical)
+                            })
+                            let waitPromise = await Promise.all(mapTask)
                             return response.success(res, 'success to get chemical task', resObjChemical)
+                                // console.log(resultCs.rows);
                         })
                 })
         } catch (error) {
@@ -469,6 +379,7 @@ select * from tb_r_tasks where periodic_check_id = ${req.params.periodic_check_i
 
     },
     getChecksheetTask: async(req, res) => {
+
         try {
             let q = `select 
 				tmmt.maintenance_id,
@@ -542,6 +453,7 @@ select * from tb_r_tasks where periodic_check_id = ${req.params.periodic_check_i
 			) AS subtask 
 				on subchecksheet.option_id = subtask.task_opt_id
 			where tmm.machine_id = ${req.query.machine_id} and subchecksheet.checksheet_id = ${req.query.checksheet_id}`
+            console.log(q);
             await queryCustom(q)
                 .then(async result => {
                     let containerChecksheet = []

@@ -46,6 +46,7 @@ module.exports = {
     },
     machineChemicalChanges: {
         postBulkData: machineChemicalChanges.postData,
-        checkChemical: machineChemicalChanges.checkChemical
+        checkChemical: machineChemicalChanges.checkChemical,
+        parametersEvaluate: machineChemicalChanges.parametersEvaluate
     }
 }
