@@ -1,5 +1,7 @@
 const table = require('../../config/table')
-const { queryCustom, queryGET, queryBulkPOST } = require('../../helpers/query')
+const attrsUserInsertData = require('../../helpers/addAttrsUserInsertData')
+const attrsUserUpdateData = require('../../helpers/addAttrsUserUpdateData')
+const { queryCustom, queryGET, queryBulkPOST, queryPUT } = require('../../helpers/query')
 const response = require('../../helpers/response')
 
 
@@ -679,5 +681,26 @@ select * from tb_r_tasks where periodic_check_id = ${req.params.periodic_check_i
             response.failed(res, error)
         }
 
+    },
+    postData: async(req, res) => {
+        try {
+            let addAttrsUserInsertData = await attrsUserInsertData(req, req.body.parameters_check)
+            await queryBulkPOST(table.tb_r_tasks, addAttrsUserInsertData)
+                .then(async result => {
+                    if (result) {
+                        let idPeriodCheck = req.body.periodic_check_id
+                        delete req.body.parameters_check
+                        delete req.body.periodic_check_id
+                        let addAttrsUserUpdateData = await attrsUserUpdateData(req, req.body)
+                        await queryPUT(table.tb_r_periodic_check, addAttrsUserUpdateData, ` WHERE periodic_check_id = ${idPeriodCheck}`)
+                            .then((result) => {
+                                response.success(res, 'Success to add chemical changes AND update Periodic check', result.rows)
+                            })
+                    }
+                })
+        } catch (error) {
+            console.log(error);
+            response.failed(res, error)
+        }
     }
 }
