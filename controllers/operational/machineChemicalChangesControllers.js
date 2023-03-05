@@ -48,6 +48,18 @@ module.exports = {
         }
     },
     parametersEvaluate: async(req, res) => {
-
+        console.log(req.body);
+        try {
+            let addAttrsUserInsertChemical = await attrsUserInsertData(req, req.body.chemical_changes)
+            let addAttrsUserInsertTask = await attrsUserInsertData(req, req.body.param_check)
+            await queryBulkPOST(table.tb_r_chemical_changes, addAttrsUserInsertChemical)
+            await queryBulkPOST(table.tb_r_tasks, addAttrsUserInsertTask)
+                .then(result => {
+                    response.success(res, 'Success to add task and chemical evaluation', result)
+                })
+        } catch (error) {
+            console.log(error);
+            response.failed(res, error)
+        }
     }
 }

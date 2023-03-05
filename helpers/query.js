@@ -59,7 +59,12 @@ module.exports = {
                 for (const key in item) {
                     if (key != 'childs') {
                         if (item[key]) {
-                            containerValues.push(`'${item[key]}'`)
+                            console.log();
+                            if (typeof item[key] == 'object') {
+                                containerValues.push(`'{${item[key].join(',')}}'`)
+                            } else {
+                                containerValues.push(`'${item[key]}'`)
+                            }
                         } else {
                             containerValues.push(`NULL`)
                         }

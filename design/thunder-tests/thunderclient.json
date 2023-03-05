@@ -692,11 +692,22 @@
     "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
     "containerId": "f9163bee-880b-4060-9839-6cf3b15d7367",
     "name": "Chemical Changes Evaluation Parameter",
-    "url": "",
-    "method": "GET",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/parameters/evaluate",
+    "method": "POST",
     "sortNum": 240000,
     "created": "2023-03-04T12:30:42.132Z",
-    "modified": "2023-03-04T12:30:42.132Z",
-    "headers": []
+    "modified": "2023-03-05T05:43:53.659Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"periodic_check_id\": 330,\n  \"chemical_changes\":[\n    {\n      \"chemical_id\": 1,\n      \"vol_changes\": 2,\n      \"cost_chemical\": 90000,\n      \"periodic_check_id\": 330,\n      \"tasks_id\": [41,43]\n    },\n    {\n      \"chemical_id\": 5,\n      \"vol_changes\": 2,\n      \"cost_chemical\": 3000,\n      \"periodic_check_id\": 330,\n      \"tasks_id\": [41,43]\n    }\n  ],\n  \"param_check\":[\n    {\n        \"periodic_check_id\": 330,\n        \"param_id\": 4,\n        \"option_id\": 1,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2,\n        \"parent_task_id\": 41,\n        \"is_evaluate\": true\n    },\n    {\n        \"periodic_check_id\": 330,\n        \"param_id\": 6,\n        \"option_id\": 10,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2,\n        \"parent_task_id\": 43,\n        \"is_evaluate\": true\n    }\n  ]\n}",
+      "form": []
+    },
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
   }
 ]

@@ -364,11 +364,11 @@ select * from tb_r_tasks where periodic_check_id = ${req.params.periodic_check_i
 					 on trpcc.periodic_check_id = trt2.periodic_check_id
 				 left join tb_m_rules tmr2
 					 on trt2.rule_id = tmr2.rule_id
-				 where trpcc.periodic_check_id = ${req.params.periodic_check_id}
+				 where trpcc.periodic_check_id = ${req.params.periodic_check_id} and trt2.is_evaluate = false
 				 order by trt2.created_dt DESC
 			) AS subtask 
 				on tmoptc.option_id = subtask.task_opt_id 
-			where tmcspc.checksheet_id = ${ref_checksheet_id} ORDER BY subtask.task_rules_lvl;
+			where tmcspc.checksheet_id = ${ref_checksheet_id} ORDER BY tmparc.param_id,subtask.task_rules_lvl ASC;
 			select * from tb_r_checmical_changes trcc where trcc.tasks_id is not null and trcc.periodic_check_id = ${req.params.periodic_check_id}`
                     await queryCustom(qDetailTask)
                         .then(async resultCs => {
@@ -376,14 +376,90 @@ select * from tb_r_tasks where periodic_check_id = ${req.params.periodic_check_i
                             // console.log(resultCs[1].rows); //chemical list used in machines
                             // console.log(resultCs[2]); //chemical changes data
                             // console.log(resultCs[4]); // parameter check after changes
-                            // console.log(resultCs[5]); // parameter evaluation
+                            // console.log(resultCs[5]); // chemical changes evaluation
                             if (resultCs[5].rows.length > 0) {
-                                console.log(resultCs[5].rows[0].tasks_id);
-                                // let containerTasksId = []
-                                // resultCs[5].rows.forEach(itm => {
-                                //     containerTasksId = itm.tasks_id
-                                //     delete itm.tasks_id
-                                // })
+                                let containerTasksId = resultCs[5].rows[0].tasks_id
+                                console.log(containerTasksId);
+                                let containerEvalParams = []
+                                    // for prepare always checking when parameter still NG
+                                let mapEvalTask = await containerTasksId.map(async taskId => {
+                                    let qTaskEval = `WITH RECURSIVE subtasks AS (
+										SELECT
+											task_id,
+											task_value,
+											task_status,
+											param_id,
+											option_id,
+											rule_id,
+											parent_task_id,
+											is_evaluate 
+										FROM
+											tb_r_tasks trt 
+										WHERE
+											periodic_check_id = ${req.params.periodic_check_id} and (task_id = ${taskId} or parent_task_id = ${taskId})
+										UNION
+											SELECT
+												e.task_id,
+												e.task_value,
+												e.task_status,
+												e.param_id,
+												e.option_id,
+												e.rule_id,
+												e.parent_task_id,
+												e.is_evaluate 
+											FROM
+												tb_r_tasks e
+											INNER JOIN subtasks s ON s.task_id = e.parent_task_id 
+									) SELECT
+										subtasks.task_id,
+										subtasks.parent_task_id,
+										subtasks.task_value,
+										subtasks.task_status,
+										subtasks.param_id,
+										subtasks.option_id,
+										subtasks.rule_id,
+										subtasks.is_evaluate 
+									FROM
+										subtasks
+									order by parent_task_id,task_id ASC`
+                                    return await queryCustom(qTaskEval)
+                                        .then(resTaskEval => {
+                                            // console.log(resTaskEval.rows);
+                                            if (resTaskEval.rows.length > 0) {
+                                                function BuildChild(data, currentChild) {
+                                                    //Creating current child object
+                                                    var child = {};
+                                                    child.task_id = currentChild.task_id;
+                                                    child.task_value = currentChild.task_value;
+                                                    child.task_status = currentChild.task_status
+                                                    child.param_id = currentChild.param_id
+                                                    child.option_id = currentChild.option_id
+                                                    child.rule_id = currentChild.rule_id
+                                                    child.parent_task_id = currentChild.parent_task_id
+                                                    child.is_evaluate = currentChild.is_evaluate
+
+                                                    child.children = [];
+
+                                                    //Looking for childrens in all input data
+                                                    var currentChildren = data.filter(item => item.parent_task_id == child.task_id);
+                                                    if (currentChildren.length > 0) {
+                                                        currentChildren.forEach(function(item) {
+                                                            //Iterating threw children and calling the recursive function
+                                                            //Adding the result to our current children
+                                                            child.children.push(BuildChild(data, item));
+                                                        });
+                                                    }
+                                                    return child;
+                                                }
+                                                // containerEvalParams.push()
+                                                return BuildChild(resTaskEval.rows, resTaskEval.rows.find(child => child.parent_task_id == null))
+                                            }
+                                            // console.log(containerEvalParams);
+                                            return containerEvalParams
+                                        })
+                                })
+                                var waitPromiseEvalTask = await Promise.all(mapEvalTask)
+                                console.log(waitPromiseEvalTask);
                             }
                             if (rawResultParent.checksheet_id) {
                                 let containerChecksheet = []
@@ -408,9 +484,13 @@ select * from tb_r_tasks where periodic_check_id = ${req.params.periodic_check_i
                                             ...headerDataObj,
                                             periodic_check_id: item.periodic_check_id,
                                             check_param_id: item.check_param_id,
-                                            chemicals: rawResultParent.checksheet_id ? [] : resultCs[1].rows,
+                                            chemicals: resultCs[1].rows,
                                             chemical_changes: resultCs[2].rows,
-                                            chemical_check: [{ param_id: item.param_id, param_nm: item.param_nm, options: [objOpt] }]
+                                            chemical_check: [{ param_id: item.param_id, param_nm: item.param_nm, options: [objOpt] }],
+                                            parameter_evaluate: {
+                                                chemical_changes: resultCs[5].rows,
+                                                param_check: waitPromiseEvalTask
+                                            }
                                         }
                                         containerChecksheet.push(obj)
                                     } else {
@@ -473,7 +553,11 @@ select * from tb_r_tasks where periodic_check_id = ${req.params.periodic_check_i
                                 ...headerDataObj,
                                 chemicals: resultCs[1].rows,
                                 chemical_changes: resultCs[2].rows,
-                                chemical_check: containerChecksheet
+                                chemical_check: containerChecksheet,
+                                parameter_evaluate: {
+                                    chemical_changes: resultCs[5].rows,
+                                    param_check: waitPromiseEvalTask
+                                }
                             }
                             return response.success(res, 'success to get chemical task', resObjChemical)
                         })
