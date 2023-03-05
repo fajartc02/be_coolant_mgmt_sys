@@ -416,21 +416,21 @@
     "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
     "containerId": "da9de551-c3c9-454d-8ba3-900a6d29a38a",
     "name": "Maintenance Machine Periodic Check List (TODAY)",
-    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/3?start_date=2023-03-04 07:00:00&end_date=2023-03-05 06:00:00",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/3?start_date=2023-03-05 07:00:00&end_date=2023-03-06 06:00:00",
     "method": "GET",
     "sortNum": 150000,
     "created": "2023-02-27T11:41:54.926Z",
-    "modified": "2023-03-04T02:12:03.497Z",
+    "modified": "2023-03-05T13:31:49.841Z",
     "headers": [],
     "params": [
       {
         "name": "start_date",
-        "value": "2023-03-04 07:00:00",
+        "value": "2023-03-05 07:00:00",
         "isPath": false
       },
       {
         "name": "end_date",
-        "value": "2023-03-05 06:00:00",
+        "value": "2023-03-06 06:00:00",
         "isPath": false
       }
     ],
@@ -715,12 +715,29 @@
     "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
     "containerId": "2dfc16ee-6731-46fa-b9bc-4f5e4146ad4d",
     "name": "Graph Cost",
-    "url": "",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/cost/graph?start=2023-03-04&end=2023-03-06",
     "method": "GET",
     "sortNum": 250000,
     "created": "2023-03-05T05:52:38.592Z",
-    "modified": "2023-03-05T05:52:38.593Z",
-    "headers": []
+    "modified": "2023-03-05T14:33:25.977Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "start",
+        "value": "2023-03-04",
+        "isPath": false
+      },
+      {
+        "name": "end",
+        "value": "2023-03-06",
+        "isPath": false
+      }
+    ],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
   },
   {
     "_id": "8c886536-b0b6-403a-8ef8-ff07f54675b0",

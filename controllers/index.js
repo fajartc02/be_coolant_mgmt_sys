@@ -1,5 +1,5 @@
 const { lines, machines, chemicals, users, groups } = require('./masterdata')
-const { linesMap, machinesStatusMap, linesSummaries, machineCheck, machineChemicalChanges } = require('./operational')
+const { linesMap, machinesStatusMap, linesSummaries, machineCheck, machineChemicalChanges, costCalculation } = require('./operational')
 const { register, login } = require('./auth/index')
 const { getPublicGroup } = require('./public/groupController')
 
@@ -40,13 +40,17 @@ module.exports = {
         getData: linesSummaries.getData
     },
     machineCheck: {
+        postData: machineCheck.postData,
         getMaintenanceMachine: machineCheck.getMaintenanceMachine,
         getMtMachineChecksheet: machineCheck.getMtMachineChecksheet,
-        getChecksheetTask: machineCheck.getChecksheetTask
+        getChecksheetTask: machineCheck.getChecksheetTask,
     },
     machineChemicalChanges: {
         postBulkData: machineChemicalChanges.postData,
         checkChemical: machineChemicalChanges.checkChemical,
         parametersEvaluate: machineChemicalChanges.parametersEvaluate
+    },
+    costCalculation: {
+        getGraphData: costCalculation.getGraphData
     }
 }
