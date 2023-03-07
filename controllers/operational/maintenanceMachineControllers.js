@@ -371,7 +371,10 @@ select * from tb_r_tasks where periodic_check_id = ${req.params.periodic_check_i
 			) AS subtask 
 				on tmoptc.option_id = subtask.task_opt_id 
 			where tmcspc.checksheet_id = ${ref_checksheet_id} ORDER BY tmparc.param_id,subtask.task_rules_lvl ASC;
-			select * from tb_r_checmical_changes trcc where trcc.tasks_id is not null and trcc.periodic_check_id = ${req.params.periodic_check_id}`
+			select trcc.*, tmc.chemical_nm from tb_r_checmical_changes trcc
+			join tb_m_chemical tmc 
+				on tmc.chemical_id = trcc.chemical_id
+			where trcc.tasks_id is not null and trcc.periodic_check_id = ${req.params.periodic_check_id}`
                     await queryCustom(qDetailTask)
                         .then(async resultCs => {
                             // console.log(resultCs[0]);//parameters check data
@@ -380,50 +383,52 @@ select * from tb_r_tasks where periodic_check_id = ${req.params.periodic_check_i
                             // console.log(resultCs[4]); // parameter check after changes
                             // console.log(resultCs[5]); // chemical changes evaluation
                             if (resultCs[5].rows.length > 0) {
+                                console.log(resultCs[5].rows);
                                 let containerTasksId = resultCs[5].rows[0].tasks_id
-                                console.log(containerTasksId);
                                 let containerEvalParams = []
                                     // for prepare always checking when parameter still NG
                                 let mapEvalTask = await containerTasksId.map(async taskId => {
                                     let qTaskEval = `WITH RECURSIVE subtasks AS (
 										SELECT
-											task_id,
-											task_value,
-											task_status,
-											param_id,
-											option_id,
-											rule_id,
-											parent_task_id,
-											is_evaluate 
-										FROM
-											tb_r_tasks trt 
-										WHERE
-											periodic_check_id = ${req.params.periodic_check_id} and (task_id = ${taskId} or parent_task_id = ${taskId})
-										UNION
-											SELECT
-												e.task_id,
-												e.task_value,
-												e.task_status,
-												e.param_id,
-												e.option_id,
-												e.rule_id,
-												e.parent_task_id,
-												e.is_evaluate 
-											FROM
-												tb_r_tasks e
-											INNER JOIN subtasks s ON s.task_id = e.parent_task_id 
-									) SELECT
-										subtasks.task_id,
-										subtasks.parent_task_id,
-										subtasks.task_value,
-										subtasks.task_status,
-										subtasks.param_id,
-										subtasks.option_id,
-										subtasks.rule_id,
-										subtasks.is_evaluate 
-									FROM
-										subtasks
-									order by parent_task_id,task_id ASC`
+										 task_id,
+										 task_value,
+										 task_status,
+										 param_id,
+										 option_id,
+										 rule_id,
+										 parent_task_id,
+										 is_evaluate 
+									  FROM
+										  tb_r_tasks trt 
+									  WHERE
+										   periodic_check_id = ${req.params.periodic_check_id} and (task_id = ${taskId} or parent_task_id = ${taskId})
+									  UNION
+										  SELECT
+											  e.task_id,
+											  e.task_value,
+											  e.task_status,
+											  e.param_id,
+											  e.option_id,
+											  e.rule_id,
+											  e.parent_task_id,
+											  e.is_evaluate 
+										  FROM
+											  tb_r_tasks e
+										  INNER JOIN subtasks s ON s.task_id = e.parent_task_id 
+									  ) SELECT
+										  subtasks.task_id,
+										  subtasks.parent_task_id,
+										  subtasks.task_value,
+										  subtasks.task_status,
+										  subtasks.param_id,
+										  tmp.param_nm,
+										  subtasks.option_id,
+										  subtasks.rule_id,
+										  subtasks.is_evaluate 
+									  FROM
+									  subtasks
+									  join tb_m_parameters tmp ON tmp.param_id = subtasks.param_id
+									  order by parent_task_id,task_id ASC`
                                     return await queryCustom(qTaskEval)
                                         .then(resTaskEval => {
                                             // console.log(resTaskEval.rows);
@@ -435,6 +440,7 @@ select * from tb_r_tasks where periodic_check_id = ${req.params.periodic_check_i
                                                     child.task_value = currentChild.task_value;
                                                     child.task_status = currentChild.task_status
                                                     child.param_id = currentChild.param_id
+                                                    child.param_nm = currentChild.param_nm
                                                     child.option_id = currentChild.option_id
                                                     child.rule_id = currentChild.rule_id
                                                     child.parent_task_id = currentChild.parent_task_id

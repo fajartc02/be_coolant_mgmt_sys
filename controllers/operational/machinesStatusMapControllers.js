@@ -4,7 +4,7 @@ const { queryCustom } = require('../../helpers/query')
 const response = require('../../helpers/response')
 
 module.exports = {
-    getData: async (req, res) => {
+    getData: async(req, res) => {
         let q = `SELECT 
     tmmc.machine_id, 
     tmmc.machine_nm, 
@@ -12,41 +12,22 @@ module.exports = {
     tmmc.machine_maker, 
     tmmc.idx_pos,
     true AS is_checked_status,
-    CASE WHEN (
-    		SELECT 
-    			CASE
-					WHEN tpcc.start_date IS NULL THEN false
-    				ELSE true
- 				END 
-    		FROM 
+	(SELECT 
+    		CASE
+				WHEN tpcc.start_date IS NULL THEN false
+    			ELSE true
+ 			END 
+    	FROM 
     			${table.tb_r_periodic_check} tpcc
-    		JOIN ${table.tb_m_machines} tmmcc
+    	JOIN ${table.tb_m_machines} tmmcc
 				ON tpcc.machine_id = tmmcc.machine_id
-			JOIN ${table.tb_m_maintenance} tmmtc
+		JOIN ${table.tb_m_maintenance} tmmtc
 				ON tpcc.maintenance_id = tmmtc.maintenance_id
-			WHERE 
+		WHERE 
 				tpcc.machine_id = tmmc.machine_id AND 
 				tmmtc.checksheet_id IS NOT NULL
-    		ORDER BY tpcc.created_dt DESC LIMIT 1
-    ) IS NULL THEN FALSE
-    ELSE (
-    		SELECT 
-    			CASE
-					WHEN tpcc.start_date IS NULL THEN false
-    				ELSE true
- 				END 
-    		FROM 
-    			${table.tb_r_periodic_check} tpcc
-    		JOIN ${table.tb_m_machines} tmmcc
-				ON tpcc.machine_id = tmmcc.machine_id
-			JOIN ${table.tb_m_maintenance} tmmtc
-				ON tpcc.maintenance_id = tmmtc.maintenance_id
-			WHERE 
-				tpcc.machine_id = tmmc.machine_id AND 
-				tmmtc.checksheet_id IS NOT NULL
-    		ORDER BY tpcc.created_dt DESC LIMIT 1
-    	)
-    END AS is_checked_status,
+    	ORDER BY tpcc.created_dt DESC LIMIT 1
+    ) AS is_checked_status,
     CASE WHEN (
     	SELECT 
     		tpcc.color_status

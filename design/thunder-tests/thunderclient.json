@@ -445,16 +445,16 @@
     "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
     "containerId": "da9de551-c3c9-454d-8ba3-900a6d29a38a",
     "name": "Maintenance Machine CS (pengecekan)",
-    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/checksheet/488?machine_id=1",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/checksheet/444?machine_id=3",
     "method": "GET",
     "sortNum": 160000,
     "created": "2023-02-27T15:01:16.498Z",
-    "modified": "2023-03-05T07:06:08.261Z",
+    "modified": "2023-03-07T15:54:01.345Z",
     "headers": [],
     "params": [
       {
         "name": "machine_id",
-        "value": "1",
+        "value": "3",
         "isPath": false
       }
     ],
@@ -696,12 +696,12 @@
     "method": "POST",
     "sortNum": 240000,
     "created": "2023-03-04T12:30:42.132Z",
-    "modified": "2023-03-05T05:43:53.659Z",
+    "modified": "2023-03-07T15:52:08.528Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"periodic_check_id\": 330,\n  \"chemical_changes\":[\n    {\n      \"chemical_id\": 1,\n      \"vol_changes\": 2,\n      \"cost_chemical\": 90000,\n      \"periodic_check_id\": 330,\n      \"tasks_id\": [41,43]\n    },\n    {\n      \"chemical_id\": 5,\n      \"vol_changes\": 2,\n      \"cost_chemical\": 3000,\n      \"periodic_check_id\": 330,\n      \"tasks_id\": [41,43]\n    }\n  ],\n  \"param_check\":[\n    {\n        \"periodic_check_id\": 330,\n        \"param_id\": 4,\n        \"option_id\": 1,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2,\n        \"parent_task_id\": 41,\n        \"is_evaluate\": true\n    },\n    {\n        \"periodic_check_id\": 330,\n        \"param_id\": 6,\n        \"option_id\": 10,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2,\n        \"parent_task_id\": 43,\n        \"is_evaluate\": true\n    }\n  ]\n}",
+      "raw": "{\n  \"periodic_check_id\": 444,\n  \"chemical_changes\":[\n    {\n      \"chemical_id\": 1,\n      \"vol_changes\": 2,\n      \"cost_chemical\": 90000,\n      \"periodic_check_id\": 444,\n      \"tasks_id\": [72,73]\n    },\n    {\n      \"chemical_id\": 5,\n      \"vol_changes\": 2,\n      \"cost_chemical\": 3000,\n      \"periodic_check_id\": 444,\n      \"tasks_id\": [72,73]\n    }\n  ],\n  \"param_check\":[\n    {\n        \"periodic_check_id\": 444,\n        \"param_id\": 4,\n        \"option_id\": 1,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2,\n        \"parent_task_id\": 72,\n        \"is_evaluate\": true\n    },\n    {\n        \"periodic_check_id\": 444,\n        \"param_id\": 6,\n        \"option_id\": 10,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2,\n        \"parent_task_id\": 73,\n        \"is_evaluate\": true\n    }\n  ]\n}",
       "form": []
     },
     "auth": {
@@ -748,12 +748,12 @@
     "method": "POST",
     "sortNum": 15000,
     "created": "2023-03-05T07:08:11.468Z",
-    "modified": "2023-03-05T07:18:10.933Z",
+    "modified": "2023-03-07T15:50:23.175Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"periodic_check_id\": 488,\n  \"start_date\": \"2023-03-05 10:38:00\",\n  \"finish_date\": \"2023-03-05 10:40:00\",\n  \"pic\": 1,\n  \"group_id\": 2,\n  \"checksheet_id\": 1,\n  \"rule_id\": 2,\n  \"parameters_check\": [\n    {\n        \"periodic_check_id\": 488,\n        \"param_id\": 4,\n        \"option_id\": 1,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 488,\n        \"param_id\": 5,\n        \"option_id\": 6,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 488,\n        \"param_id\": 6,\n        \"option_id\": 10,\n        \"task_value\": 4,\n        \"task_status\": \"OK\",\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 488,\n        \"param_id\": 7,\n        \"option_id\": 11,\n        \"task_value\": 5,\n        \"task_status\": \"OK\",\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 488,\n        \"param_id\": 8,\n        \"option_id\": 9,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    }\n  ]\n}",
+      "raw": "{\n  \"periodic_check_id\": 444,\n  \"start_date\": \"2023-03-07 10:38:00\",\n  \"finish_date\": \"2023-03-07 10:48:00\",\n  \"pic\": 1,\n  \"group_id\": 2,\n  \"checksheet_id\": 1,\n  \"rule_id\": 2,\n  \"parameters_check\": [\n    {\n        \"periodic_check_id\": 444,\n        \"param_id\": 4,\n        \"option_id\": 1,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 444,\n        \"param_id\": 5,\n        \"option_id\": 6,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 444,\n        \"param_id\": 6,\n        \"option_id\": 10,\n        \"task_value\": 4,\n        \"task_status\": \"OK\",\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 444,\n        \"param_id\": 7,\n        \"option_id\": 11,\n        \"task_value\": 5,\n        \"task_status\": \"OK\",\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 444,\n        \"param_id\": 8,\n        \"option_id\": 9,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    }\n  ]\n}",
       "form": []
     },
     "auth": {
