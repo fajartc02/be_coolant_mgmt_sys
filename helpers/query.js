@@ -93,7 +93,7 @@ module.exports = {
                 containerSetValues.push(`${key} = '${data[key]}'`)
             }
 
-            let q = `UPDATE ${table} SET ${containerSetValues.join(',')} ${whereCond}`
+            let q = `UPDATE ${table} SET ${containerSetValues.join(',')} ${whereCond} RETURNING *`
             await database.query(q)
                 .then((result) => {
                     resolve(result)
