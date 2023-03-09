@@ -174,7 +174,8 @@ where
 	tmmt.maintenance_id,
 	tmmt.maintenance_nm,
 	tmcs.checksheet_id,
-	trpc.checksheet_id as ref_checksheet_id 
+	trpc.checksheet_id as ref_checksheet_id,
+	trpc.notes
 from tb_r_periodic_check trpc 
 left join tb_m_users tmu 
 	ON tmu.user_id = trpc.pic
@@ -203,6 +204,7 @@ where trpc.periodic_check_id = ${req.params.periodic_check_id}`
                         group: rawResultParent.group_id,
                         group_nm: rawResultParent.group_nm,
                         checksheet_id: rawResultParent.checksheet_id,
+                        notes: rawResultParent.notes
                     }
                     let qDetailTask = `select
 	trpcp.periodic_check_id,
