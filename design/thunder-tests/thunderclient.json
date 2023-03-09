@@ -748,12 +748,12 @@
     "method": "POST",
     "sortNum": 15000,
     "created": "2023-03-05T07:08:11.468Z",
-    "modified": "2023-03-07T15:50:23.175Z",
+    "modified": "2023-03-09T09:32:55.287Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"periodic_check_id\": 444,\n  \"start_date\": \"2023-03-07 10:38:00\",\n  \"finish_date\": \"2023-03-07 10:48:00\",\n  \"pic\": 1,\n  \"group_id\": 2,\n  \"checksheet_id\": 1,\n  \"rule_id\": 2,\n  \"parameters_check\": [\n    {\n        \"periodic_check_id\": 444,\n        \"param_id\": 4,\n        \"option_id\": 1,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 444,\n        \"param_id\": 5,\n        \"option_id\": 6,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 444,\n        \"param_id\": 6,\n        \"option_id\": 10,\n        \"task_value\": 4,\n        \"task_status\": \"OK\",\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 444,\n        \"param_id\": 7,\n        \"option_id\": 11,\n        \"task_value\": 5,\n        \"task_status\": \"OK\",\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 444,\n        \"param_id\": 8,\n        \"option_id\": 9,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    }\n  ]\n}",
+      "raw": "{\n  \"periodic_check_id\": 766,\n  \"start_date\": \"2023-03-07 10:38:00\",\n  \"finish_date\": \"2023-03-07 10:48:00\",\n  \"pic\": 1,\n  \"group_id\": 2,\n  \"checksheet_id\": 1,\n  \"rule_id\": 2,\n  \"color_status\": \"#ff3f00\",\n  \"parameters_check\": [\n    {\n        \"periodic_check_id\": 766,\n        \"param_id\": 4,\n        \"option_id\": 1,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 766,\n        \"param_id\": 5,\n        \"option_id\": 6,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 766,\n        \"param_id\": 6,\n        \"option_id\": 10,\n        \"task_value\": 4,\n        \"task_status\": \"OK\",\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 766,\n        \"param_id\": 7,\n        \"option_id\": 11,\n        \"task_value\": 5,\n        \"task_status\": \"OK\",\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 766,\n        \"param_id\": 8,\n        \"option_id\": 9,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    }\n  ]\n}",
       "form": []
     },
     "auth": {
