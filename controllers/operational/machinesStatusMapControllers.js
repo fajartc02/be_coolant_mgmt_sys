@@ -5,6 +5,10 @@ const response = require('../../helpers/response')
 
 module.exports = {
     getData: async(req, res) => {
+        let dateFilter = ``
+        if (req.query.start_date) {
+            dateFilter = `AND tpcc.created_dt BETWEEN '${req.query.start_date}' AND '${req.query.end_date}'`
+        }
         let q = `SELECT 
     tmmc.machine_id, 
     tmmc.machine_nm, 
@@ -26,7 +30,8 @@ module.exports = {
 		WHERE 
 				tpcc.machine_id = tmmc.machine_id AND 
 				tmmtc.checksheet_id IS NOT NULL
-    	ORDER BY tpcc.created_dt DESC LIMIT 1
+			${dateFilter}
+    	LIMIT 1
     ) AS is_checked_status,
     CASE WHEN (
     	SELECT 
@@ -40,7 +45,8 @@ module.exports = {
 		WHERE 
 			tpcc.machine_id = tmmc.machine_id AND 
 			tmmtc.checksheet_id IS NOT NULL
-    	ORDER BY tpcc.created_dt DESC LIMIT 1
+			${dateFilter}
+    	LIMIT 1
     ) IS NULL THEN '#00ff90'
     ELSE (
     	SELECT 
@@ -54,7 +60,8 @@ module.exports = {
 		WHERE 
 			tpcc.machine_id = tmmc.machine_id AND 
 			tmmtc.checksheet_id IS NOT NULL
-    	ORDER BY tpcc.created_dt DESC LIMIT 1
+			${dateFilter}
+    	LIMIT 1
     ) END AS checked_color_status,
     CASE WHEN (
     	SELECT 
@@ -71,7 +78,8 @@ module.exports = {
 		WHERE 
 			tpcc.machine_id = tmmc.machine_id AND 
 			tmmtc.checksheet_id IS NULL
-    	ORDER BY tpcc.created_dt DESC LIMIT 1
+			${dateFilter}
+    	LIMIT 1
     ) IS NULL THEN FALSE
     ELSE (
     	SELECT 
@@ -88,7 +96,8 @@ module.exports = {
 		WHERE 
 			tpcc.machine_id = tmmc.machine_id AND 
 			tmmtc.checksheet_id IS NULL
-    	ORDER BY tpcc.created_dt DESC LIMIT 1
+		${dateFilter}
+    	LIMIT 1
     ) END AS is_chemical_changes,
     CASE 
     	WHEN (
@@ -106,7 +115,8 @@ module.exports = {
 			WHERE 
 				tpcc.machine_id = tmmc.machine_id AND 
 				tmmtc.checksheet_id IS NULL
-    		ORDER BY tpcc.created_dt DESC LIMIT 1
+			${dateFilter}
+    		LIMIT 1
     	) IS NULL THEN 'Belum Waktunya di kuras'
     	WHEN (
     		SELECT 
@@ -123,7 +133,8 @@ module.exports = {
 			WHERE 
 				tpcc.machine_id = tmmc.machine_id AND 
 				tmmtc.checksheet_id IS NULL
-    		ORDER BY tpcc.created_dt DESC LIMIT 1
+			${dateFilter}
+    		LIMIT 1
     	) = FALSE THEN 'Sudah Waktunya Penggantian'
     	WHEN (
     		SELECT 
@@ -140,13 +151,14 @@ module.exports = {
 			WHERE 
 				tpcc.machine_id = tmmc.machine_id AND 
 				tmmtc.checksheet_id IS NULL
-    		ORDER BY tpcc.created_dt DESC LIMIT 1
+				${dateFilter}
+    		LIMIT 1
     	) = TRUE THEN 'Sudah Dilakukan Penggantian Coolant'
     END AS chemical_changes_msg
 FROM 
         ${table.tb_m_machines} tmmc 
 WHERE 
-        tmmc.line_id = ${req.params.line_id} 
+        tmmc.line_id = ${req.params.line_id}
 ORDER BY 
         tmmc.idx_pos 
 ASC`
