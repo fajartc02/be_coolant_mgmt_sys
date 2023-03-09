@@ -15,11 +15,9 @@ module.exports = {
             if (cols) {
                 selectedCols = cols.join(',')
             }
-
             if (!whereCond) {
                 whereCond = ''
             }
-
             let q = `SELECT ${selectedCols} FROM ${table} ${whereCond}`
             console.log(q);
             await database.query(q)
