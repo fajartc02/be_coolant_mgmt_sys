@@ -4,7 +4,7 @@ const { queryGET } = require('./query')
 
 async function userCheck(noreg) {
     const table = 'tb_m_users'
-    await queryGET(table, `WHERE noreg = '${noreg}'`, ['noreg', 'name'])
+    return await queryGET(table, `WHERE noreg = '${noreg}'`, ['noreg', 'name'])
         .then((result) => {
             return result[0]
         }).catch((err) => {
@@ -30,7 +30,8 @@ module.exports = {
             if (!token) response.notAllowed(res, 'No token provide');
             let userDataVerify = await jwt.verify(token, process.env.SECRET_KEY)
             let userData = await userCheck(userDataVerify.noreg)
-            next(userData)
+            req.user = userData
+            next()
         } catch (error) {
             response.notAllowed(res, 'Token Is Invalid');
         }

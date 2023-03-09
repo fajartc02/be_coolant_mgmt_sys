@@ -322,24 +322,6 @@
     "tests": []
   },
   {
-    "_id": "f5805d83-5cb6-4cdd-a97d-5228659f2804",
-    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
-    "containerId": "78e9171c-6336-4d16-811d-ee58f5dd7d9c",
-    "name": "Checklist Machine",
-    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/checksheet/check/machine/40",
-    "method": "GET",
-    "sortNum": 90000,
-    "created": "2023-02-20T13:52:40.040Z",
-    "modified": "2023-02-21T19:15:53.931Z",
-    "headers": [],
-    "params": [],
-    "auth": {
-      "type": "bearer",
-      "bearer": "{{token}}"
-    },
-    "tests": []
-  },
-  {
     "_id": "aca70201-3bf7-49d0-8f56-1fb389aea336",
     "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
     "containerId": "a76b2081-75a3-42ea-988d-9da7bda94036",
@@ -433,22 +415,22 @@
     "_id": "7a8665f8-5388-4d05-827c-03b092a50d7c",
     "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
     "containerId": "da9de551-c3c9-454d-8ba3-900a6d29a38a",
-    "name": "Maintenance Machine Check",
-    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/2?start_date=2023-02-27 07:00:00&end_date=2023-02-28 06:00:00",
+    "name": "Maintenance Machine Periodic Check List (TODAY)",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/3?start_date=2023-03-05 07:00:00&end_date=2023-03-06 06:00:00",
     "method": "GET",
     "sortNum": 150000,
     "created": "2023-02-27T11:41:54.926Z",
-    "modified": "2023-02-27T16:17:41.705Z",
+    "modified": "2023-03-05T13:31:49.841Z",
     "headers": [],
     "params": [
       {
         "name": "start_date",
-        "value": "2023-02-27 07:00:00",
+        "value": "2023-03-05 07:00:00",
         "isPath": false
       },
       {
         "name": "end_date",
-        "value": "2023-02-28 06:00:00",
+        "value": "2023-03-06 06:00:00",
         "isPath": false
       }
     ],
@@ -463,11 +445,35 @@
     "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
     "containerId": "da9de551-c3c9-454d-8ba3-900a6d29a38a",
     "name": "Maintenance Machine CS (pengecekan)",
-    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/checksheet/390?machine_id=1",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/checksheet/444?machine_id=3",
     "method": "GET",
     "sortNum": 160000,
     "created": "2023-02-27T15:01:16.498Z",
-    "modified": "2023-02-27T16:29:00.236Z",
+    "modified": "2023-03-07T15:54:01.345Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "machine_id",
+        "value": "3",
+        "isPath": false
+      }
+    ],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "4085b21b-3534-44a3-8b4b-f5875f1d8048",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "da9de551-c3c9-454d-8ba3-900a6d29a38a",
+    "name": "Maintenance Machine CS (pengurasan)",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/checksheet/518?machine_id=1",
+    "method": "GET",
+    "sortNum": 170000,
+    "created": "2023-02-27T15:40:12.775Z",
+    "modified": "2023-03-05T07:02:27.394Z",
     "headers": [],
     "params": [
       {
@@ -483,20 +489,38 @@
     "tests": []
   },
   {
-    "_id": "4085b21b-3534-44a3-8b4b-f5875f1d8048",
+    "_id": "70f08142-e5e9-4b39-bde5-3281d2698ebb",
     "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
-    "containerId": "da9de551-c3c9-454d-8ba3-900a6d29a38a",
-    "name": "Maintenance Machine CS (pengurasan)",
-    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/checksheet/449?machine_id=2",
+    "containerId": "7bf6a133-b1e5-4bb7-9b5e-dacfe2981151",
+    "name": "Machines Schedules List",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/master/maintenance/schedules",
     "method": "GET",
-    "sortNum": 170000,
-    "created": "2023-02-27T15:40:12.775Z",
-    "modified": "2023-02-27T17:13:35.250Z",
+    "sortNum": 190000,
+    "created": "2023-03-01T15:38:21.102Z",
+    "modified": "2023-03-01T16:28:38.328Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "e738855a-b6dd-4807-8752-1390759afe1e",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "7bf6a133-b1e5-4bb7-9b5e-dacfe2981151",
+    "name": "Machines Schedules List (Machine)",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/master/maintenance/schedules?tmm.machine_id=1",
+    "method": "GET",
+    "sortNum": 200000,
+    "created": "2023-03-01T16:25:14.436Z",
+    "modified": "2023-03-01T16:26:08.372Z",
     "headers": [],
     "params": [
       {
-        "name": "machine_id",
-        "value": "2",
+        "name": "tmm.machine_id",
+        "value": "1",
         "isPath": false
       }
     ],
@@ -507,15 +531,253 @@
     "tests": []
   },
   {
-    "_id": "05862968-62a9-4311-ba31-1e31241e392c",
+    "_id": "37469cd7-bb77-4fcb-966c-7861e985f989",
     "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
-    "containerId": "da9de551-c3c9-454d-8ba3-900a6d29a38a",
-    "name": "MT Machine Chemical Changes",
-    "url": "",
+    "containerId": "7bf6a133-b1e5-4bb7-9b5e-dacfe2981151",
+    "name": "Machines Schedules List (checksheet)",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/master/maintenance/schedules?tmcs.checksheet_id=null",
     "method": "GET",
-    "sortNum": 170000,
-    "created": "2023-02-27T15:52:49.083Z",
-    "modified": "2023-02-27T15:52:49.083Z",
-    "headers": []
+    "sortNum": 195000,
+    "created": "2023-03-01T16:27:02.000Z",
+    "modified": "2023-03-01T16:27:40.813Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "tmcs.checksheet_id",
+        "value": "not_null",
+        "isDisabled": true,
+        "isPath": false
+      },
+      {
+        "name": "tmcs.checksheet_id",
+        "value": "null",
+        "isPath": false
+      }
+    ],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "baf218a5-6fa8-4881-b478-e80f0b1def91",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "7bf6a133-b1e5-4bb7-9b5e-dacfe2981151",
+    "name": "Machines Schedules List (machine&Checksheet)",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/master/maintenance/schedules?tmm.machine_id=1&tmcs.checksheet_id=not_null",
+    "method": "GET",
+    "sortNum": 192500,
+    "created": "2023-03-01T16:28:13.485Z",
+    "modified": "2023-03-01T16:28:13.485Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "tmm.machine_id",
+        "value": "1",
+        "isPath": false
+      },
+      {
+        "name": "tmcs.checksheet_id",
+        "value": "not_null",
+        "isPath": false
+      }
+    ],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "cad1fb78-49e9-4d11-a278-43b5f10f1741",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "0fe0f6d7-3599-4c50-8bfa-0d5c87499bad",
+    "name": "Maintenance Checksheet List",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/master/maintenance/schedules",
+    "method": "GET",
+    "sortNum": 210000,
+    "created": "2023-03-02T15:17:22.610Z",
+    "modified": "2023-03-02T15:17:44.809Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "3cc39ce8-9b5b-43ae-b6d0-f90945a0bc46",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "04167492-e54b-41c2-9b77-839cec795239",
+    "name": "Checksheet After Changes",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/task?machine_id=1&periodic_check_id=330&checksheet_id=1",
+    "method": "GET",
+    "sortNum": 220000,
+    "created": "2023-03-04T02:35:23.534Z",
+    "modified": "2023-03-04T03:08:03.830Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "machine_id",
+        "value": "1",
+        "isPath": false
+      },
+      {
+        "name": "periodic_check_id",
+        "value": "330",
+        "isPath": false
+      },
+      {
+        "name": "checksheet_id",
+        "value": "1",
+        "isPath": false
+      }
+    ],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "35239a7f-18de-4351-b8dc-fb83e06690b9",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "f9163bee-880b-4060-9839-6cf3b15d7367",
+    "name": "Chemical Changes",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/chemicals",
+    "method": "POST",
+    "sortNum": 10000,
+    "created": "2023-03-04T03:20:42.538Z",
+    "modified": "2023-03-05T07:03:03.617Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"periodic_check_id\": 518,\n  \"start_date\": \"2023-03-04 10:38:00\",\n  \"finish_date\": \"2023-03-04 10:40:00\",\n  \"pic\": 1,\n  \"group_id\": 2,\n  \"chemicals\": [\n    {\n       \"chemical_id\": 1,\n        \"vol_changes\": 2,\n        \"cost_chemical\": 90000,\n        \"periodic_check_id\": 518\n    },\n    {\n       \"chemical_id\": 5,\n        \"vol_changes\": 2,\n        \"cost_chemical\": 5000,\n        \"periodic_check_id\": 518\n    }\n  ]\n}",
+      "form": []
+    },
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "6ec2b293-1311-4127-8367-ef0c352cb67a",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "f9163bee-880b-4060-9839-6cf3b15d7367",
+    "name": "Chemical Changes Check",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/chemicals/check",
+    "method": "POST",
+    "sortNum": 20000,
+    "created": "2023-03-04T09:00:47.720Z",
+    "modified": "2023-03-04T10:49:27.557Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"periodic_check_id\": 330,\n  \"checksheet_id\": 1,\n  \"parameters_check\": [\n    {\n        \"periodic_check_id\": 330,\n        \"param_id\": 4,\n        \"option_id\": 1,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 330,\n        \"param_id\": 5,\n        \"option_id\": 6,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 330,\n        \"param_id\": 6,\n        \"option_id\": 10,\n        \"task_value\": 4,\n        \"task_status\": \"OK\",\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 330,\n        \"param_id\": 7,\n        \"option_id\": 11,\n        \"task_value\": 5,\n        \"task_status\": \"OK\",\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 330,\n        \"param_id\": 8,\n        \"option_id\": 9,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    }\n  ]\n}",
+      "form": []
+    },
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "8d15d87e-a755-4fb2-9f6c-78473798770a",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "f9163bee-880b-4060-9839-6cf3b15d7367",
+    "name": "Chemical Changes Evaluation Parameter",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/parameters/evaluate",
+    "method": "POST",
+    "sortNum": 240000,
+    "created": "2023-03-04T12:30:42.132Z",
+    "modified": "2023-03-07T15:52:08.528Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"periodic_check_id\": 444,\n  \"chemical_changes\":[\n    {\n      \"chemical_id\": 1,\n      \"vol_changes\": 2,\n      \"cost_chemical\": 90000,\n      \"periodic_check_id\": 444,\n      \"tasks_id\": [72,73]\n    },\n    {\n      \"chemical_id\": 5,\n      \"vol_changes\": 2,\n      \"cost_chemical\": 3000,\n      \"periodic_check_id\": 444,\n      \"tasks_id\": [72,73]\n    }\n  ],\n  \"param_check\":[\n    {\n        \"periodic_check_id\": 444,\n        \"param_id\": 4,\n        \"option_id\": 1,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2,\n        \"parent_task_id\": 72,\n        \"is_evaluate\": true\n    },\n    {\n        \"periodic_check_id\": 444,\n        \"param_id\": 6,\n        \"option_id\": 10,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2,\n        \"parent_task_id\": 73,\n        \"is_evaluate\": true\n    }\n  ]\n}",
+      "form": []
+    },
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "ff13ce0a-5ef8-4e51-9f27-f2315b8d05ae",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "2dfc16ee-6731-46fa-b9bc-4f5e4146ad4d",
+    "name": "Graph Cost",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/cost/graph?start=2023-03-04&end=2023-03-06",
+    "method": "GET",
+    "sortNum": 250000,
+    "created": "2023-03-05T05:52:38.592Z",
+    "modified": "2023-03-05T14:33:25.977Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "start",
+        "value": "2023-03-04",
+        "isPath": false
+      },
+      {
+        "name": "end",
+        "value": "2023-03-06",
+        "isPath": false
+      }
+    ],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "8c886536-b0b6-403a-8ef8-ff07f54675b0",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "f9163bee-880b-4060-9839-6cf3b15d7367",
+    "name": "Checksheet Check",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/maintenance/machine/checksheet",
+    "method": "POST",
+    "sortNum": 15000,
+    "created": "2023-03-05T07:08:11.468Z",
+    "modified": "2023-03-09T09:32:55.287Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"periodic_check_id\": 766,\n  \"start_date\": \"2023-03-07 10:38:00\",\n  \"finish_date\": \"2023-03-07 10:48:00\",\n  \"pic\": 1,\n  \"group_id\": 2,\n  \"checksheet_id\": 1,\n  \"rule_id\": 2,\n  \"color_status\": \"#ff3f00\",\n  \"parameters_check\": [\n    {\n        \"periodic_check_id\": 766,\n        \"param_id\": 4,\n        \"option_id\": 1,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 766,\n        \"param_id\": 5,\n        \"option_id\": 6,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 766,\n        \"param_id\": 6,\n        \"option_id\": 10,\n        \"task_value\": 4,\n        \"task_status\": \"OK\",\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 766,\n        \"param_id\": 7,\n        \"option_id\": 11,\n        \"task_value\": 5,\n        \"task_status\": \"OK\",\n        \"rule_id\": 2\n    },\n    {\n        \"periodic_check_id\": 766,\n        \"param_id\": 8,\n        \"option_id\": 9,\n        \"task_value\": null,\n        \"task_status\": null,\n        \"rule_id\": 2\n    }\n  ]\n}",
+      "form": []
+    },
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "9d90bccf-d13e-410e-93f1-e830fb0366e3",
+    "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
+    "containerId": "463ffa5b-6540-4e8f-8ce7-52e0e74de331",
+    "name": "MachinesById",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/master/machines/59",
+    "method": "GET",
+    "sortNum": 55000,
+    "created": "2023-03-09T09:21:49.442Z",
+    "modified": "2023-03-09T09:25:06.471Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
   }
 ]

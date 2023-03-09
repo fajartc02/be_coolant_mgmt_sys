@@ -6,9 +6,10 @@ module.exports = {
         try {
             let whereCond = ''
             if (req.params.machine_id) {
-                whereCond = ` AND machine_id = ${req.params.machine_id}`
+                whereCond = ` WHERE machine_id = ${req.params.machine_id}`
             }
-            await queryGET(table.tb_m_machines).then((result) => {
+            console.log(whereCond);
+            await queryGET(table.tb_m_machines, whereCond).then((result) => {
                 response.success(res, 'Success to get all machines', result)
             })
         } catch (error) {

@@ -13,7 +13,7 @@ const table = {
     tb_m_periodic: 'tb_m_periodic',
     tb_m_rules: 'tb_m_rules',
     tb_m_users: 'tb_m_users',
-    tb_r_chemical_changes: 'tb_r_chemical_changes',
+    tb_r_chemical_changes: 'tb_r_checmical_changes',
     tb_r_cron_log: 'tb_r_cron_log',
     tb_r_logs: 'tb_r_logs',
     tb_r_mt_schedules: 'tb_r_mt_schedules',
