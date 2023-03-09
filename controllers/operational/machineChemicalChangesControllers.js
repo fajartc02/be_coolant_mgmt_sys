@@ -54,8 +54,15 @@ module.exports = {
             let addAttrsUserInsertTask = await attrsUserInsertData(req, req.body.param_check)
             await queryBulkPOST(table.tb_r_chemical_changes, addAttrsUserInsertChemical)
             await queryBulkPOST(table.tb_r_tasks, addAttrsUserInsertTask)
-                .then(result => {
-                    response.success(res, 'Success to add task and chemical evaluation', result)
+                .then(async resultParent => {
+                    delete req.body.chemical_changes
+                    delete req.body.param_check
+                    let idPeriodCheck = req.body.periodic_check_id
+                    let addAttrsUserUpdateData = await attrsUserUpdateData(req, req.body)
+                    await queryPUT(table.tb_r_periodic_check, addAttrsUserUpdateData, ` WHERE periodic_check_id = ${idPeriodCheck}`)
+                        .then((result) => {
+                            response.success(res, 'Success to add chemical changes AND update Periodic check', result)
+                        })
                 })
         } catch (error) {
             console.log(error);

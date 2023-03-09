@@ -75,6 +75,7 @@ left join (
 	from tb_r_tasks trt2
 	 join tb_m_rules tmr2
 	 	on tmr2.rule_id = trt2.rule_id 
+	where trt2.is_evaluate = false
 ) AS subtask 
 	on subchecksheet.option_id = subtask.task_opt_id 
 where tmmcp.machine_id = ${req.params.machine_id} AND
@@ -93,7 +94,17 @@ order by trpcp.periodic_check_id;
                     await result.rows.forEach((item, i) => {
                         let findChecksheet = containerChecksheet.find(cs => cs.checksheet_id === item.checksheet_id)
                         let obj;
-                        let objOpt = { option_id: item.option_id, opt_nm: item.opt_nm, min_value: item.min_value, units: item.units, max_value: item.max_value, rule_id: item.rule_id, rules_nm: item.rules_nm, rule_lvl: item.rule_lvl, selected_opt: item.task_opt_id ? true : false }
+                        let objOpt = {
+                            option_id: item.option_id,
+                            opt_nm: item.opt_nm,
+                            min_value: item.min_value,
+                            units: item.units,
+                            max_value: item.max_value,
+                            rule_id: item.rule_id,
+                            rules_nm: item.rules_nm,
+                            rule_lvl: item.rule_lvl,
+                            selected_opt: (item.task_opt_id && !item.is_evaluate) ? true : false
+                        }
                         if (!findChecksheet) {
                             obj = {
                                 periodic_check_id: item.periodic_check_id,
@@ -203,6 +214,7 @@ where trpc.periodic_check_id = ${req.params.periodic_check_id}`
 	subtask.task_id,
 	subtask.task_value,
 	subtask.task_status,
+	subtask.is_evaluate,
 	task_param_id,
 	task_opt_id
 FROM 
@@ -261,19 +273,22 @@ left join (
     	trt2.option_id as task_opt_id,
     	tmr2.rules_nm as task_rule_nm,
     	tmr2.rule_lvl as task_rules_lvl,
-    	tmr2.color as task_rules_color
+    	tmr2.color as task_rules_color,
+		trt2.is_evaluate,
+		trt2.parent_task_id
 	from tb_r_tasks trt2
 	 join tb_r_periodic_check trpcc
 	 	on trpcc.periodic_check_id = trt2.periodic_check_id
 	 left join tb_m_rules tmr2
 	 	on trt2.rule_id = tmr2.rule_id
-	 where trpcc.periodic_check_id = ${req.params.periodic_check_id}
+	 where trpcc.periodic_check_id = ${req.params.periodic_check_id} and trt2.is_evaluate = false
 	 order by trt2.created_dt DESC
 ) AS subtask 
 	on subchecksheet.option_id = subtask.task_opt_id 
 where tmmcp.machine_id = ${req.query.machine_id} AND
 subchecksheet.checksheet_id IS NOT null and
-trpcp.periodic_check_id = ${req.params.periodic_check_id}`
+trpcp.periodic_check_id = ${req.params.periodic_check_id} AND
+subtask.parent_task_id is null`
                     qDetailTask += `;select 
 	tmmc.machine_chemical_id, 
 	tmmc.machine_id, 
@@ -360,13 +375,14 @@ select * from tb_r_tasks where periodic_check_id = ${req.params.periodic_check_i
 					trt2.option_id as task_opt_id,
 					tmr2.rules_nm as task_rule_nm,
 					tmr2.rule_lvl as task_rules_lvl,
-					tmr2.color as task_rules_color
+					tmr2.color as task_rules_color,
+					trt2.is_evaluate
 				from tb_r_tasks trt2
 				 join tb_r_periodic_check trpcc
 					 on trpcc.periodic_check_id = trt2.periodic_check_id
 				 left join tb_m_rules tmr2
 					 on trt2.rule_id = tmr2.rule_id
-				 where trpcc.periodic_check_id = ${req.params.periodic_check_id} and trt2.is_evaluate = false
+				 where trpcc.periodic_check_id = ${req.params.periodic_check_id} and trt2.is_evaluate = false and trt2.parent_task_id IS NULL
 				 order by trt2.created_dt DESC
 			) AS subtask 
 				on tmoptc.option_id = subtask.task_opt_id 
@@ -388,7 +404,7 @@ select * from tb_r_tasks where periodic_check_id = ${req.params.periodic_check_i
                                 let containerEvalParams = []
                                     // for prepare always checking when parameter still NG
                                 let mapEvalTask = await containerTasksId.map(async taskId => {
-                                    let qTaskEval = `WITH RECURSIVE subtasks AS (
+                                        let qTaskEval = `WITH RECURSIVE subtasks AS (
 										SELECT
 										 task_id,
 										 task_value,
@@ -429,64 +445,67 @@ select * from tb_r_tasks where periodic_check_id = ${req.params.periodic_check_i
 									  subtasks
 									  join tb_m_parameters tmp ON tmp.param_id = subtasks.param_id
 									  order by parent_task_id,task_id ASC`
-                                    return await queryCustom(qTaskEval)
-                                        .then(resTaskEval => {
-                                            // console.log(resTaskEval.rows);
-                                            if (resTaskEval.rows.length > 0) {
-                                                function BuildChild(data, currentChild) {
-                                                    //Creating current child object
-                                                    var child = {};
-                                                    child.task_id = currentChild.task_id;
-                                                    child.task_value = currentChild.task_value;
-                                                    child.task_status = currentChild.task_status
-                                                    child.param_id = currentChild.param_id
-                                                    child.param_nm = currentChild.param_nm
-                                                    child.option_id = currentChild.option_id
-                                                    child.rule_id = currentChild.rule_id
-                                                    child.parent_task_id = currentChild.parent_task_id
-                                                    child.is_evaluate = currentChild.is_evaluate
+                                        return await queryCustom(qTaskEval)
+                                            .then(resTaskEval => {
+                                                // console.log(resTaskEval.rows);
+                                                if (resTaskEval.rows.length > 0) {
+                                                    function BuildChild(data, currentChild) {
+                                                        //Creating current child object
+                                                        var child = {};
+                                                        child.task_id = currentChild.task_id;
+                                                        child.task_value = currentChild.task_value;
+                                                        child.task_status = currentChild.task_status
+                                                        child.param_id = currentChild.param_id
+                                                        child.param_nm = currentChild.param_nm
+                                                        child.option_id = currentChild.option_id
+                                                        child.rule_id = currentChild.rule_id
+                                                        child.parent_task_id = currentChild.parent_task_id
+                                                        child.is_evaluate = currentChild.is_evaluate
 
-                                                    child.children = [];
+                                                        child.children = [];
 
-                                                    //Looking for childrens in all input data
-                                                    var currentChildren = data.filter(item => item.parent_task_id == child.task_id);
-                                                    if (currentChildren.length > 0) {
-                                                        currentChildren.forEach(function(item) {
-                                                            //Iterating threw children and calling the recursive function
-                                                            //Adding the result to our current children
-                                                            child.children.push(BuildChild(data, item));
-                                                        });
+                                                        //Looking for childrens in all input data
+                                                        var currentChildren = data.filter(item => item.parent_task_id == child.task_id);
+                                                        if (currentChildren.length > 0) {
+                                                            currentChildren.forEach(function(item) {
+                                                                //Iterating threw children and calling the recursive function
+                                                                //Adding the result to our current children
+                                                                child.children.push(BuildChild(data, item));
+                                                            });
+                                                        }
+                                                        return child;
                                                     }
-                                                    return child;
+                                                    // containerEvalParams.push()
+                                                    return BuildChild(resTaskEval.rows, resTaskEval.rows.find(child => child.parent_task_id == null))
                                                 }
-                                                // containerEvalParams.push()
-                                                return BuildChild(resTaskEval.rows, resTaskEval.rows.find(child => child.parent_task_id == null))
-                                            }
-                                            // console.log(containerEvalParams);
-                                            return containerEvalParams
-                                        })
-                                })
+                                                // console.log(containerEvalParams);
+                                                return containerEvalParams
+                                            })
+                                    })
+                                    // console.log(mapEvalTask);
                                 var waitPromiseEvalTask = await Promise.all(mapEvalTask)
-                                console.log(waitPromiseEvalTask);
+                                    // console.log(waitPromiseEvalTask);
                             }
                             if (rawResultParent.checksheet_id) {
                                 let containerChecksheet = []
                                 await resultCs[0].rows.forEach((item, i) => {
                                     let findChecksheet = containerChecksheet.find(cs => cs.checksheet_id === item.checksheet_id)
                                     let obj;
+
                                     let objOpt = {
-                                        option_id: item.option_id,
-                                        opt_nm: item.opt_nm,
-                                        min_value: item.min_value,
-                                        units: item.units,
-                                        max_value: item.max_value,
-                                        rule_id: item.rule_id,
-                                        rules_nm: item.rules_nm,
-                                        rule_lvl: item.rule_lvl,
-                                        task_value: item.task_value,
-                                        task_status: item.task_status,
-                                        selected_opt: item.task_opt_id ? true : false
-                                    }
+                                            option_id: item.option_id,
+                                            opt_nm: item.opt_nm,
+                                            min_value: item.min_value,
+                                            units: item.units,
+                                            max_value: item.max_value,
+                                            rule_id: item.rule_id,
+                                            rules_nm: item.rules_nm,
+                                            rule_lvl: item.rule_lvl,
+                                            task_value: item.task_value,
+                                            task_status: item.task_status,
+                                            selected_opt: (item.task_opt_id && !item.is_evaluate) ? true : false
+                                        }
+                                        // console.log(objOpt);
                                     if (!findChecksheet) {
                                         obj = {
                                             ...headerDataObj,
@@ -533,7 +552,7 @@ select * from tb_r_tasks where periodic_check_id = ${req.params.periodic_check_i
                                     rule_lvl: item.rule_lvl,
                                     task_value: item.task_value,
                                     task_status: item.task_status,
-                                    selected_opt: item.task_opt_id ? true : false
+                                    selected_opt: (item.task_opt_id && !item.is_evaluate) ? true : false
                                 }
                                 if (!findChecksheet) {
                                     obj = {
@@ -656,7 +675,17 @@ select * from tb_r_tasks where periodic_check_id = ${req.params.periodic_check_i
                     await result.rows.forEach((item, i) => {
                         let findChecksheet = containerChecksheet.find(cs => cs.checksheet_id === item.checksheet_id)
                         let obj;
-                        let objOpt = { option_id: item.option_id, opt_nm: item.opt_nm, min_value: item.min_value, units: item.units, max_value: item.max_value, rule_id: item.rule_id, rules_nm: item.rules_nm, rule_lvl: item.rule_lvl, selected_opt: item.task_opt_id ? true : false }
+                        let objOpt = {
+                            option_id: item.option_id,
+                            opt_nm: item.opt_nm,
+                            min_value: item.min_value,
+                            units: item.units,
+                            max_value: item.max_value,
+                            rule_id: item.rule_id,
+                            rules_nm: item.rules_nm,
+                            rule_lvl: item.rule_lvl,
+                            selected_opt: (item.task_opt_id && !item.is_evaluate) ? true : false
+                        }
                         if (!findChecksheet) {
                             obj = {
                                 periodic_check_id: item.periodic_check_id,
