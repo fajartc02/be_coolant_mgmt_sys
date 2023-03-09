@@ -650,12 +650,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2023-03-04T03:20:42.538Z",
-    "modified": "2023-03-05T07:03:03.617Z",
+    "modified": "2023-03-09T13:24:56.039Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"periodic_check_id\": 518,\n  \"start_date\": \"2023-03-04 10:38:00\",\n  \"finish_date\": \"2023-03-04 10:40:00\",\n  \"pic\": 1,\n  \"group_id\": 2,\n  \"chemicals\": [\n    {\n       \"chemical_id\": 1,\n        \"vol_changes\": 2,\n        \"cost_chemical\": 90000,\n        \"periodic_check_id\": 518\n    },\n    {\n       \"chemical_id\": 5,\n        \"vol_changes\": 2,\n        \"cost_chemical\": 5000,\n        \"periodic_check_id\": 518\n    }\n  ]\n}",
+      "raw": "{\n  \"periodic_check_id\": 651,\n  \"start_date\": \"2023-03-04 10:38:00\",\n  \"finish_date\": \"2023-03-04 10:48:00\",\n  \"pic\": 1,\n  \"group_id\": 2,\n  \"chemicals\": [\n    {\n       \"chemical_id\": 1,\n        \"vol_changes\": 2,\n        \"cost_chemical\": 90000,\n        \"periodic_check_id\": 651\n    },\n    {\n       \"chemical_id\": 5,\n        \"vol_changes\": 2,\n        \"cost_chemical\": 5000,\n        \"periodic_check_id\": 651\n    }\n  ]\n}",
       "form": []
     },
     "auth": {
@@ -715,21 +715,21 @@
     "colId": "c2146109-6e42-4006-86f8-be15bfe20f9d",
     "containerId": "2dfc16ee-6731-46fa-b9bc-4f5e4146ad4d",
     "name": "Graph Cost",
-    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/cost/graph?start=2023-03-04&end=2023-03-06",
+    "url": "{{protocol}}{{hostname}}{{api}}{{version}}/operational/cost/graph?start=2023-03-01&end=2023-03-10",
     "method": "GET",
     "sortNum": 250000,
     "created": "2023-03-05T05:52:38.592Z",
-    "modified": "2023-03-05T14:33:25.977Z",
+    "modified": "2023-03-09T13:27:35.114Z",
     "headers": [],
     "params": [
       {
         "name": "start",
-        "value": "2023-03-04",
+        "value": "2023-03-01",
         "isPath": false
       },
       {
         "name": "end",
-        "value": "2023-03-06",
+        "value": "2023-03-10",
         "isPath": false
       }
     ],
